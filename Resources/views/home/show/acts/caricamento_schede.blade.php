@@ -1,1 +1,1 @@
-@include('clubreport::admin.index.acts.caricamento_schede')
+@include('clubreport::admin.home.acts.caricamento_schede')

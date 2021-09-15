@@ -1,1 +1,1 @@
-@include('clubreport::admin.index.acts.ricerca')
+@include('clubreport::admin.home.acts.ricerca')
