@@ -1,8 +1,8 @@
-@extends('pub_theme::layouts.app')
+@extends ('clubreport::layouts.app')
 
 @section('content')
 
-    <div class="container">
+    <div class="container-large">
         <div class="row justify-content-md-center mt-5">
             <div class="col-md-8">
                 <div class="card">
@@ -15,8 +15,7 @@
                                 <label class="col-md-4 control-label">E-Mail Address</label>
 
                                 <div class="col-md-12">
-                                    <input type="email" class="form-control" name="email"
-                                           value="{{ old('email') }}">
+                                    <input type="email" class="form-control" name="email" value="{{ old('email') }}">
 
                                     @if ($errors->has('email'))
                                         <span class="form-text text-muted">
