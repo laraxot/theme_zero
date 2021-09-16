@@ -1,26 +1,48 @@
-let mix = require('laravel-mix');
+const mix = require('laravel-mix');
+require('dotenv').config({
+    path: __dirname + '/../../../../.env'
+});
 
-/*
- |--------------------------------------------------------------------------
- | Mix Asset Management
- |--------------------------------------------------------------------------
- |
- | Mix provides a clean, fluent API for defining some Webpack build steps
- | for your Laravel application. By default, we are compiling the Sass
- | file for the application as well as bundling up all the JS files.
- |
- */
+require('laravel-mix-polyfill');
 
 mix.autoload({
-    jquery: ['$', 'window.jQuery', 'jQuery'],
+    jquery: ['$', 'window.jQuery', 'jQuery'], // more than one
     tether: ['window.Tether', 'Tether'],
     'tether-shepherd': ['Shepherd'],
-    'popper.js/dist/popper.js': ['Popper']
-})
-    .js('resources/js/app.js', 'dist/js')
-    .sass('resources/sass/app.scss', 'dist/css')
-    .options({
-        postCss: [
-            require('precss')()
-        ]
-    });
+    'popper.js/dist/popper.js': ['Popper'],
+    sweetalert2: ['Swal'],
+    'magnific-popup': ['magnificPopup'],
+    'multiselect-two-sides': ['multiselect'],
+    moment: 'moment' // only one
+});
+
+mix.js('Resources/js/app.js', 'dist/js')
+    .sass('Resources/sass/app.scss', 'dist/css');
+
+mix.js('Resources/js/form.js', 'dist/js')
+    .sass('Resources/sass/form.scss', 'dist/css');
+
+mix.setResourceRoot('/themes/coderdocs/dist');
+mix.setPublicPath('dist');
+
+mix.extract(['vue', 'jquery', 'bootstrap']);
+
+mix.polyfill({
+    enabled: true,
+    useBuiltIns: "usage",
+    targets: {
+        "firefox": "50",
+        "ie": 11
+    }
+});
+
+
+var $prefix = '../../../../';
+var $suffix = '/themes/zero';
+var $resource_root = $prefix + $suffix;
+var $public_path = $prefix + process.env.MIX_PUBLIC_FOLDER + $suffix;
+
+console.log('public_path :' + $public_path);
+console.log('dirname :' + __dirname);
+$res = mix.copyDirectory(__dirname + '/dist', $public_path + '/dist');
+//console.log($res);
