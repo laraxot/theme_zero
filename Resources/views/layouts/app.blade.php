@@ -1,65 +1,408 @@
-<!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('pub_theme::layouts.plane')
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+@section('css')
+    <style>
+        .container {
+            position: relative;
+            text-align: center;
+            color: white;
+        }
 
-    <title>{{ config('app.name', 'Laravel') }} {{ app()->version() }}</title>
+        /* Bottom left text */
+        .bottom-left {
+            position: absolute;
+            bottom: 8px;
+            left: 16px;
+        }
 
-    <!-- Styles -->
-    <link href="{{ Theme::asset('pub_theme::dist/css/app.css') }}" rel="stylesheet">
-</head>
-<body>
-<div id="app">
+        /* Top left text */
+        .top-left {
+            position: absolute;
+            top: 8px;
+            left: 16px;
+        }
 
-    {{-- top bar  --}}
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        /* Top right text */
+        .top-right {
+            position: absolute;
+            top: 8px;
+            right: 16px;
+        }
 
-        <a class="navbar-brand" href="#">{{ config('app.name', 'Laravel') }} {{ app()->version() }}</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <ul class="navbar-nav">
-            <li class="nav-item"><a href="{{-- route('home') --}}" class="nav-link">Home</a></li>
-        </ul>
+        /* Bottom right text */
+        .bottom-right {
+            position: absolute;
+            bottom: 8px;
+            right: 16px;
+        }
 
-        <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-            <ul class="navbar-nav">
-                @if (Auth::guest())
-                    <li class="nav-item"><a href="{{ route('login') }}" class="nav-link">Login</a></li>
-                    <li class="nav-item"><a href="{{ route('register') }}" class="nav-link">Register</a></li>
-                @else
-                    <li class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                           aria-haspopup="true" aria-expanded="false">{{ Auth::user()->name }}</a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a href="{{ route('logout') }}" class="dropdown-item"
-                               onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                                Logout
-                            </a>
+        /* Centered text */
+        .centered {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
 
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                  style="display: none;">
-                                {{ csrf_field() }}
-                            </form>
-                        </div>
-                    </li>
-                @endif
-            </ul>
+        @import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            outline: none;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background: #f2f2f2;
+        }
+
+        nav {
+            background: #0062ff;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            height: 70px;
+            padding: 0 100px;
+        }
+
+        nav .logo {
+            color: #fff;
+            font-size: 30px;
+            font-weight: 600;
+            letter-spacing: -1px;
+        }
+
+        nav .nav-items {
+            display: flex;
+            flex: 1;
+            padding: 0 0 0 40px;
+        }
+
+        nav .nav-items li {
+            list-style: none;
+            padding: 0 15px;
+        }
+
+        nav .nav-items li a {
+            color: #fff;
+            font-size: 18px;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        nav .nav-items li a:hover {
+            color: #0062ff;
+        }
+
+        nav form {
+            display: flex;
+            height: 40px;
+            padding: 2px;
+            background: #fff;
+            min-width: 18% !important;
+            border-radius: 2px;
+            border: 1px solid rgba(155, 155, 155, 0.2);
+        }
+
+        nav form .search-data {
+            width: 100%;
+            height: 100%;
+            padding: 0 10px;
+            color: #fff;
+            font-size: 17px;
+            border: none;
+            font-weight: 500;
+            background: none;
+        }
+
+        nav form button {
+            padding: 0 15px;
+            color: #fff;
+            font-size: 17px;
+            background: #0062ff;
+            border: none;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+
+        nav form button:hover {
+            background: #0062ff;
+        }
+
+        nav .menu-icon,
+        nav .cancel-icon,
+        nav .search-icon {
+            width: 40px;
+            text-align: center;
+            margin: 0 50px;
+            font-size: 18px;
+            color: #fff;
+            cursor: pointer;
+            display: none;
+        }
+
+        nav .menu-icon span,
+        nav .cancel-icon,
+        nav .search-icon {
+            display: none;
+        }
+
+        @media (max-width: 1245px) {
+            nav {
+                padding: 0 50px;
+            }
+        }
+
+        @media (max-width: 1140px) {
+            nav {
+                padding: 0px;
+            }
+
+            nav .logo {
+                flex: 2;
+                text-align: center;
+            }
+
+            nav .nav-items {
+                position: fixed;
+                z-index: 99;
+                top: 70px;
+                width: 100%;
+                left: -100%;
+                height: 100%;
+                padding: 10px 50px 0 50px;
+                text-align: center;
+                background: #0062ff;
+                display: inline-block;
+                transition: left 0.3s ease;
+            }
+
+            nav .nav-items.active {
+                left: 0px;
+            }
+
+            nav .nav-items li {
+                line-height: 40px;
+                margin: 30px 0;
+            }
+
+            nav .nav-items li a {
+                font-size: 20px;
+            }
+
+            nav form {
+                position: absolute;
+                top: 80px;
+                right: 50px;
+                opacity: 0;
+                pointer-events: none;
+                transition: top 0.3s ease, opacity 0.1s ease;
+            }
+
+            nav form.active {
+                top: 95px;
+                opacity: 1;
+                pointer-events: auto;
+            }
+
+            nav form:before {
+                position: absolute;
+                content: "";
+                top: -13px;
+                right: 0px;
+                width: 0;
+                height: 0;
+                z-index: -1;
+                border: 10px solid transparent;
+                border-bottom-color: #0062ff;
+                margin: -20px 0 0;
+            }
+
+            nav form:after {
+                position: absolute;
+                content: '';
+                height: 60px;
+                padding: 2px;
+                background: #0062ff;
+                border-radius: 2px;
+                min-width: calc(100% + 20px);
+                z-index: -2;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+            }
+
+            nav .menu-icon {
+                display: block;
+            }
+
+            nav .search-icon,
+            nav .menu-icon span {
+                display: block;
+            }
+
+            nav .menu-icon span.hide,
+            nav .search-icon.hide {
+                display: none;
+            }
+
+            nav .cancel-icon.show {
+                display: block;
+            }
+        }
+
+        .content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            text-align: center;
+            transform: translate(-50%, -50%);
+        }
+
+        .content header {
+            font-size: 30px;
+            font-weight: 700;
+        }
+
+        .content .text {
+            font-size: 30px;
+            font-weight: 700;
+        }
+
+        .space {
+            margin: 10px 0;
+        }
+
+        nav .logo.space {
+            color: red;
+            padding: 0 5px 0 0;
+        }
+
+        @media (max-width: 980px) {
+
+            nav .menu-icon,
+            nav .cancel-icon,
+            nav .search-icon {
+                margin: 0 20px;
+            }
+
+            nav form {
+                right: 30px;
+            }
+        }
+
+        @media (max-width: 350px) {
+
+            nav .menu-icon,
+            nav .cancel-icon,
+            nav .search-icon {
+                margin: 0 10px;
+                font-size: 16px;
+            }
+        }
+
+        .content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .content header {
+            font-size: 30px;
+            font-weight: 700;
+        }
+
+        .content .text {
+            font-size: 30px;
+            font-weight: 700;
+        }
+
+        .content .space {
+            margin: 10px 0;
+        }
+
+    </style>
+@endsection
+
+@section('navbar')
+    <nav>
+        <div class="menu-icon">
+            <span class="fas fa-bars"></span>
         </div>
+        <div class="logo">
+            ClubReports
+        </div>
+        <div class="nav-items">
 
+            @php
+
+                //dddx(Panel::getHomePanel()->urlItemAction('caricamento_schede'));
+            @endphp
+
+
+            <li><a href="/">Home</a>
+            </li>
+            <li><a href="{{ route('admin.show', ['module' => 'clubreport', '_act' => 'archivio_schede']) }}">Ricerca</a>
+            </li>
+            <li><a
+                    href="{{ route('admin.show', ['module' => 'clubreport', '_act' => 'caricamento_schede']) }}">Inserimento</a>
+            </li>
+            <!--<li><a href="#">Contact</a></li>
+                                                                                                                                                                                                                                                                                                                                    <li><a href="#">Feedback</a></li>-->
+        </div>
+        <div class="search-icon">
+            <span class="fas fa-search"></span>
+        </div>
+        <div class="cancel-icon">
+            <span class="fas fa-times"></span>
+        </div>
+        <!--<form action="#">
+                                                                                                                                                                                                                                                                                            <input type="search" class="search-data" placeholder="Search" required>
+                                                                                                                                                                                                                                                                                            <button type="submit" class="fas fa-search"></button>
+                                                                                                                                                                                                                                                                                        </form>-->
     </nav>
+
+    <script>
+        const menuBtn = document.querySelector(".menu-icon span");
+        const searchBtn = document.querySelector(".search-icon");
+        const cancelBtn = document.querySelector(".cancel-icon");
+        const items = document.querySelector(".nav-items");
+        const form = document.querySelector("form");
+        menuBtn.onclick = () => {
+            items.classList.add("active");
+            menuBtn.classList.add("hide");
+            searchBtn.classList.add("hide");
+            cancelBtn.classList.add("show");
+        }
+        cancelBtn.onclick = () => {
+            items.classList.remove("active");
+            menuBtn.classList.remove("hide");
+            searchBtn.classList.remove("hide");
+            cancelBtn.classList.remove("show");
+            form.classList.remove("active");
+            cancelBtn.style.color = "#ff3d00";
+        }
+        searchBtn.onclick = () => {
+            form.classList.add("active");
+            searchBtn.classList.add("hide");
+            cancelBtn.classList.add("show");
+        }
+    </script>
+@endsection
+
+
+@section('body')
+
+
+    @yield('css')
+
+    @yield('navbar')
 
     @yield('content')
 
-</div>
 
-<!-- Scripts -->
-<script src="{{ Theme::asset('pub_theme::dist/js/app.js') }}"></script>
-</body>
-</html>
+@endsection
