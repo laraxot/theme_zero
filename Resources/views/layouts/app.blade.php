@@ -346,13 +346,17 @@
 
             <li><a href="/">Home</a>
             </li>
-            <li><a href="{{ route('admin.show', ['module' => 'clubreport', '_act' => 'archivio_schede']) }}">Ricerca</a>
+            <li><a href="{{ $_panel->itemAction('archivio_schede')->url() }}">Ricerca
+                </a>
+
             </li>
-            <li><a
-                    href="{{ route('admin.show', ['module' => 'clubreport', '_act' => 'caricamento_schede']) }}">Inserimento</a>
+            <li><a href="{{ $_panel->itemAction('caricamento_schede')->url() }}">Inserimento
+
+                </a>
+
             </li>
             <!--<li><a href="#">Contact</a></li>
-                                                                                                                                                                                                                                                                                                                                    <li><a href="#">Feedback</a></li>-->
+                                                                                                                                                                                                                                                                                                                                                                                <li><a href="#">Feedback</a></li>-->
         </div>
         <div class="search-icon">
             <span class="fas fa-search"></span>
@@ -361,9 +365,9 @@
             <span class="fas fa-times"></span>
         </div>
         <!--<form action="#">
-                                                                                                                                                                                                                                                                                            <input type="search" class="search-data" placeholder="Search" required>
-                                                                                                                                                                                                                                                                                            <button type="submit" class="fas fa-search"></button>
-                                                                                                                                                                                                                                                                                        </form>-->
+                                                                                                                                                                                                                                                                                                                                        <input type="search" class="search-data" placeholder="Search" required>
+                                                                                                                                                                                                                                                                                                                                        <button type="submit" class="fas fa-search"></button>
+                                                                                                                                                                                                                                                                                                                                    </form>-->
     </nav>
 
     <script>
