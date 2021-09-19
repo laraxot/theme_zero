@@ -1,4 +1,6 @@
-@extends('pub_theme::layouts.plane')
+{{-- pagina copiata da layouts.app di sbadmin24 --}}
+
+@extends('adm_theme::layouts.plane')
 
 @section('css')
     <style>
@@ -59,7 +61,7 @@
         }
 
         nav {
-            background: #0062ff;
+            background: #e3342f;
             display: flex;
             flex-wrap: wrap;
             align-items: center;
@@ -94,7 +96,7 @@
         }
 
         nav .nav-items li a:hover {
-            color: #0062ff;
+            color: #e3342f;
         }
 
         nav form {
@@ -122,14 +124,14 @@
             padding: 0 15px;
             color: #fff;
             font-size: 17px;
-            background: #0062ff;
+            background: #e3342f;
             border: none;
             border-radius: 2px;
             cursor: pointer;
         }
 
         nav form button:hover {
-            background: #0062ff;
+            background: #e3342f
         }
 
         nav .menu-icon,
@@ -175,8 +177,7 @@
                 height: 100%;
                 padding: 10px 50px 0 50px;
                 text-align: center;
-                background: #0062ff;
-                display: inline-block;
+                background: #e3342f display: inline-block;
                 transition: left 0.3s ease;
             }
 
@@ -217,7 +218,7 @@
                 height: 0;
                 z-index: -1;
                 border: 10px solid transparent;
-                border-bottom-color: #0062ff;
+                border-bottom-color: #e3342f;
                 margin: -20px 0 0;
             }
 
@@ -226,7 +227,7 @@
                 content: '';
                 height: 60px;
                 padding: 2px;
-                background: #0062ff;
+                background: #e3342f;
                 border-radius: 2px;
                 min-width: calc(100% + 20px);
                 z-index: -2;
@@ -339,24 +340,54 @@
         <div class="nav-items">
 
             @php
-
+                
                 //dddx(Panel::getHomePanel()->urlItemAction('caricamento_schede'));
             @endphp
 
 
             <li><a href="/">Home</a>
             </li>
-            <li><a href="{{ $_panel->itemAction('archivio_schede')->url() }}">Ricerca
-                </a>
 
-            </li>
-            <li><a href="{{ $_panel->itemAction('caricamento_schede')->url() }}">Inserimento
+            @php
+                
+                //dddx(\Auth::user()->perm_type);
+                /*dddx(
+                                                                                                                                                                                                                                    \Auth::user()
+                                                                                                                                                                                                                                        ->rights->where('right_define_name', 'writer')
+                                                                                                                                                                                                                                        ->count(),
+                                                                                                                                                                                                                                );*/
+            @endphp
 
-                </a>
+            @if (\Auth::check())
 
-            </li>
+                @php
+                    //dddx(\Auth::user()->hasRight('writer'));
+                @endphp
+
+                <li><a
+                        href="{{ route('admin.show', ['module' => 'clubreport', '_act' => 'archivio_schede']) }}">Ricerca</a>
+                </li>
+
+                @can('caricamentoSchede', Panel::getHomePanel())
+                    <li><a
+                            href="{{ route('admin.show', ['module' => 'clubreport', '_act' => 'caricamento_schede']) }}">Inserimento</a>
+                    </li>
+                @endcan
+
+                <li><a
+                        href="{{ route('admin.show', ['module' => 'clubreport', '_act' => 'modifica_password']) }}">Profilo</a>
+                </li>
+                <li><a href="{{ route('logout') }}"
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        Logout
+                    </a></li>
+            @else
+                <li><a href="{{ route('admin.show', ['module' => 'clubreport', '_act' => 'archivio_schede']) }}">Login</a>
+                </li>
+            @endif
+
             <!--<li><a href="#">Contact</a></li>
-                                                                                                                                                                                                                                                                                                                                                                                <li><a href="#">Feedback</a></li>-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <li><a href="#">Feedback</a></li>-->
         </div>
         <div class="search-icon">
             <span class="fas fa-search"></span>
@@ -365,10 +396,14 @@
             <span class="fas fa-times"></span>
         </div>
         <!--<form action="#">
-                                                                                                                                                                                                                                                                                                                                        <input type="search" class="search-data" placeholder="Search" required>
-                                                                                                                                                                                                                                                                                                                                        <button type="submit" class="fas fa-search"></button>
-                                                                                                                                                                                                                                                                                                                                    </form>-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <input type="search" class="search-data" placeholder="Search" required>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <button type="submit" class="fas fa-search"></button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </form>-->
     </nav>
+
+    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+        {{ csrf_field() }}
+    </form>
 
     <script>
         const menuBtn = document.querySelector(".menu-icon span");
