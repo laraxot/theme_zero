@@ -1,15 +1,42 @@
-
 // Fonts
-@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
-
+@import url('https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i');
 // Variables
-@import "custom";
-
+@import 'variables';
 // Bootstrap
-@import "node_modules/bootstrap/scss/bootstrap";
+@import '~bootstrap/scss/bootstrap';
+@import '~bootstrap/scss/bootstrap-grid';
+//@import "~bootstrap-sass/assets/stylesheets/bootstrap";
 
-// Font-Awesome
 @import "~@fortawesome/fontawesome-free/scss/fontawesome";
 @import "~@fortawesome/fontawesome-free/scss/regular";
 @import "~@fortawesome/fontawesome-free/scss/solid";
 @import "~@fortawesome/fontawesome-free/scss/brands";
+@import "~@fortawesome/fontawesome-free/scss/v4-shims";
+
+//@import "~@fortawesome/fontawesome-free-webfonts/scss/fontawesome";
+//@import "~@fortawesome/fontawesome-free-webfonts/scss/fa-regular";
+//@import "~@fortawesome/fontawesome-free-webfonts/scss/fa-solid"
+
+//@import 'node_modules/font-awesome/scss/font-awesome.scss';
+
+//@import '~glyphicons-halflings/scss/glyphicons-halflings';
+
+
+
+@import '~sweetalert2/src/sweetalert2.scss';
+
+// Magnific PopUp
+@import "~magnific-popup/src/css/main.scss";
+
+@import "~flatpickr/dist/flatpickr.min.css";
+
+@import '../css/html5imageupload.css';
+@import '../css/html5imageupload_style.css';
+
+//@import '~vuetify/dist/vuetify.min.css';
+//@import '~material-design-icons-iconfont/dist/material-design-icons.css';
+//@import '~@mdi/font/css/materialdesignicons.css';
+
+// Coreui
+//@import '~@coreui/coreui/dist/css/coreui.min.css';
+

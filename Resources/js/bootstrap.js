@@ -8,13 +8,26 @@ import Popper from 'popper.js/dist/umd/popper.js';
  */
 
 try {
-    window.$ = window.jQuery = require('jquery');
+    window.Popper = require('popper.js').default;
+    const $ = window.$ = window.jQuery = require('jquery');
+
     window.Tether = require('tether');
-    window.Popper = Popper;
+    //window.Popper = require('popper.js').default;
+
+    //const tether = require('Tether');
+    const tooltip = require('jquery-ui/ui/widgets/tooltip');
+
+    const Swal = window.Swal = require('sweetalert2');
     const flatpickr = window.flatpickr = require("flatpickr");
-
+    const it = window.it = require("flatpickr/dist/l10n/it.js").default.it;
     require('bootstrap');
-
+    const collapse = require('bootstrap/js/dist/collapse');
+    const magnificPopup = window.magnificPopup = require('magnific-popup');
+    require('jquery.easing');
+    require('typeahead.js');
+    const multiselect = window.multiselect = require("multiselect-two-sides");
+    require('bootstrap');
+    //require("@babel/polyfill");
 } catch (e) {}
 
 window.axios = require('axios');

@@ -1,6 +1,6 @@
 $(".datetime_flatpickr").flatpickr({
     wrap: true,
-    locale: 'it',
+    //locale: 'it',
     //altInput: true,
     //altFormat: "F j, Y",
     dateFormat: "d/m/Y H:i",
@@ -11,7 +11,7 @@ $(".datetime_flatpickr").flatpickr({
 
 $(".date_flatpickr").flatpickr({
     wrap: true,
-    locale: 'it',
+    //locale: 'it',
     //altInput: true,
     //altFormat: "F j, Y",
     dateFormat: "d/m/Y",
@@ -21,7 +21,7 @@ $(".date_flatpickr").flatpickr({
 
 $(".time_flatpickr").flatpickr({
     wrap: true,
-    locale: 'it',
+    //locale: 'it',
     //altInput: true,
     //altFormat: "F j, Y",
     dateFormat: "H:i",

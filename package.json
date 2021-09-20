@@ -43,5 +43,8 @@
         "vue-template-compiler": "^2.6.12",
         "webpack": "^5.37.1",
         "webpack-cli": "^4.7.0"
+    },
+    "dependencies": {
+        "mini-css-extract-plugin": "^1.6.2"
     }
 }
