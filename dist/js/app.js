@@ -1,4 +1,4 @@
-(self["webpackChunk"] = self["webpackChunk"] || []).push([["/Resources/views/dist/js/app"],{
+(self["webpackChunk"] = self["webpackChunk"] || []).push([["/js/app"],{
 
 /***/ "./node_modules/axios/index.js":
 /*!*************************************!*\
@@ -26820,7 +26820,7 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 },
 /******/ __webpack_require__ => { // webpackRuntimeModules
 /******/ var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-/******/ __webpack_require__.O(0, ["Resources/views/dist/css/app","/Resources/views/dist/js/vendor"], () => (__webpack_exec__("./Resources/js/app.js"), __webpack_exec__("./Resources/sass/app.scss")));
+/******/ __webpack_require__.O(0, ["dist/css/app","/js/vendor"], () => (__webpack_exec__("./Resources/js/app.js"), __webpack_exec__("./Resources/sass/app.scss")));
 /******/ var __webpack_exports__ = __webpack_require__.O();
 /******/ }
 ]);

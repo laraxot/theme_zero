@@ -16,14 +16,17 @@ mix.autoload({
     moment: 'moment' // only one
 });
 
-mix.js('Resources/js/app.js', 'dist/js')
+/*mix.js('Resources/js/app.js', 'dist/js')
     .sass('Resources/sass/app.scss', 'dist/css');
 
 mix.js('Resources/js/form.js', 'dist/js')
-    .sass('Resources/sass/form.scss', 'dist/css');
+    .sass('Resources/sass/form.scss', 'dist/css');*/
 
-mix.setResourceRoot('/themes/coderdocs/dist');
-mix.setPublicPath('dist');
+mix.js('Resources/js/app.js', 'Resources/views/dist/js')
+    .sass('Resources/sass/app.scss', 'Resources/views/dist/css')
+
+mix.setResourceRoot('../');
+//mix.setPublicPath('dist');
 
 mix.extract(['vue', 'jquery', 'bootstrap']);
 
@@ -44,5 +47,4 @@ var $public_path = $prefix + process.env.MIX_PUBLIC_FOLDER + $suffix;
 
 console.log('public_path :' + $public_path);
 console.log('dirname :' + __dirname);
-$res = mix.copyDirectory(__dirname + '/dist', $public_path + '/dist');
-//console.log($res);
+$res = mix.copyDirectory(__dirname + '/Resources/views/dist', $public_path + '/dist');
