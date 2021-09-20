@@ -25,8 +25,8 @@ mix.js('Resources/js/form.js', 'dist/js')
 mix.js('Resources/js/app.js', 'Resources/views/dist/js')
     .sass('Resources/sass/app.scss', 'Resources/views/dist/css')
 
-mix.setResourceRoot('../');
-//mix.setPublicPath('dist');
+mix.setResourceRoot('/themes/zero/dist');
+mix.setPublicPath('dist');
 
 mix.extract(['vue', 'jquery', 'bootstrap']);
 
@@ -47,4 +47,5 @@ var $public_path = $prefix + process.env.MIX_PUBLIC_FOLDER + $suffix;
 
 console.log('public_path :' + $public_path);
 console.log('dirname :' + __dirname);
-$res = mix.copyDirectory(__dirname + '/Resources/views/dist', $public_path + '/dist');
+$res = mix.copyDirectory(__dirname + '/dist', $public_path + '/dist');
+//console.log($res);
