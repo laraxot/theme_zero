@@ -1,14 +1,6 @@
 {{-- pagina copiata da layouts.app di sbadmin24 --}}
 
-@php
-/*dddx(
-    Panel::getHomePanel()
-        ->itemAction('caricamento_schede')
-        ->url(),
-); */
-@endphp
-
-@extends('pub_theme::layouts.plane')
+@extends('adm_theme::layouts.plane')
 
 @section('css')
     <style>
@@ -360,10 +352,10 @@
                 
                 //dddx(\Auth::user()->perm_type);
                 /*dddx(
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    \Auth::user()
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ->rights->where('right_define_name', 'writer')
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ->count(),
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                );*/
+                                                                                                                                                                                                                                    \Auth::user()
+                                                                                                                                                                                                                                        ->rights->where('right_define_name', 'writer')
+                                                                                                                                                                                                                                        ->count(),
+                                                                                                                                                                                                                                );*/
             @endphp
 
             @if (\Auth::check())
@@ -372,29 +364,30 @@
                     //dddx(\Auth::user()->hasRight('writer'));
                 @endphp
 
-                <li><a href="{{ Panel::getHomePanel()->itemAction('archivio_schede')->url() }}">Ricerca</a>
+                <li><a
+                        href="{{ route('admin.show', ['module' => 'clubreport', '_act' => 'archivio_schede']) }}">Ricerca</a>
                 </li>
 
-
                 @can('caricamentoSchede', Panel::getHomePanel())
-                    <li><a href="{{ Panel::getHomePanel()->itemAction('caricamento_schede')->url() }}">Inserimento</a>
+                    <li><a
+                            href="{{ route('admin.show', ['module' => 'clubreport', '_act' => 'caricamento_schede']) }}">Inserimento</a>
                     </li>
                 @endcan
 
-                <li><a href="#">Profilo</a>
+                <li><a
+                        href="{{ route('admin.show', ['module' => 'clubreport', '_act' => 'modifica_password']) }}">Profilo</a>
                 </li>
                 <li><a href="{{ route('logout') }}"
                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         Logout
                     </a></li>
             @else
-                <li><a
-                        href="{{ Panel::getHomePanel()->itemAction('archivio_schede')->url() }}">Login</a>
+                <li><a href="{{ route('admin.show', ['module' => 'clubreport', '_act' => 'archivio_schede']) }}">Login</a>
                 </li>
             @endif
 
             <!--<li><a href="#">Contact</a></li>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <li><a href="#">Feedback</a></li>-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <li><a href="#">Feedback</a></li>-->
         </div>
         <div class="search-icon">
             <span class="fas fa-search"></span>
@@ -403,9 +396,9 @@
             <span class="fas fa-times"></span>
         </div>
         <!--<form action="#">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <input type="search" class="search-data" placeholder="Search" required>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <button type="submit" class="fas fa-search"></button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </form>-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <input type="search" class="search-data" placeholder="Search" required>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <button type="submit" class="fas fa-search"></button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </form>-->
     </nav>
 
     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

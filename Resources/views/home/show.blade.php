@@ -1,4 +1,4 @@
-@extends ('clubreport::layouts.app')
+@extends ('pub_theme::layouts.app')
 @section('content')
 
 
@@ -8,8 +8,8 @@
             <img style="width:100vw;height:100vh;opacity:0.6" class="img-fluid"
                 src="{{ Theme::asset('pub_theme::img/homebackground.jpg') }}" alt="portale dei sindacati" />
             <div class="centered" style="width:100vw;background: rgba(0,0,0,0.5);
-                                    padding-left: 2vw;
-                                    padding-right: 2vw;"><span
+                                        padding-left: 2vw;
+                                        padding-right: 2vw;"><span
                     style="color:white;font-size:7vh;font-weight:bold;text-shadow:2px 2px rgb(39, 39, 39);">BENVENUTO</span>
             </div>
         </div>
