@@ -35,7 +35,7 @@
 
                 <td>{{ $row->description }}</td>
 
-                <td>{{ $row->path }}</td>
+                <td>{{ $_panel->setRow($row)->itemAction('scarica_file')->url() }}</td>
             </tr>
 
 

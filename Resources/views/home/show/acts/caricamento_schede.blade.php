@@ -161,7 +161,7 @@
                                     </td>
                                     <td>{{ Form::bsTextNolabel('description[]', '', ['placeholder' => 'Descrizione']) }}</td>
                                     <td>{{ Form::bsPdf($row->id) }}</td>
-                                    <td>{{ $row->id != 14 ? Form::bsCheckbox('purposal_flag', '', ['label' => 'Nessuna Proposta&nbsp;']) : '' }}
+                                    <td>{{ $row->id != 14 ? Form::bsCheckbox('purposal_flag[]', '', ['label' => 'Nessuna Proposta&nbsp;']) : '' }}
                                     </td>
                                 </tr>
 

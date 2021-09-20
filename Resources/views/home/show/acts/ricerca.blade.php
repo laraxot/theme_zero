@@ -21,8 +21,8 @@ xotModel('club')
 @section('content')
 
     <!--<div>
-                                    <livewire:clubreport::tendina />
-                                </div>-->
+                                                                        <livewire:clubreport::tendina />
+                                                                    </div>-->
 
 
     <div class="container-large">
@@ -31,7 +31,11 @@ xotModel('club')
 
             <div class="col-md-12 p-3">
 
-                {!! Form::model(null, ['url' => Request::fullUrl(), 'id' => 'mainForm', 'class' => 'form-inline']) !!}
+                @php
+                    //dddx($row->region_id);
+                @endphp
+
+                {!! Form::model($row, ['url' => Request::fullUrl(), 'id' => 'mainForm', 'class' => 'form-inline']) !!}
                 @method('post')
 
                 <div class="col-md-3">
@@ -61,6 +65,8 @@ xotModel('club')
     'region_id',
     [],
     [
+        /*per mettere il valore inviato dal form precedente */
+        'value' => $row->region_id,
         'style' => 'width:100%',
         'label' => ' ',
         'placeholder' => 'Regione',
