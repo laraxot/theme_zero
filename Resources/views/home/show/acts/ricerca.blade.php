@@ -20,9 +20,9 @@ xotModel('club')
 
 @section('content')
 
-    <div>
-        <livewire:clubreport::tendina />
-    </div>
+    <!--<div>
+                <livewire:clubreport::tendina />
+            </div>-->
 
 
     <div class="container-large">

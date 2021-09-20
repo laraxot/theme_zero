@@ -23,7 +23,7 @@ mix.js('Resources/js/form.js', 'dist/js')
     .sass('Resources/sass/form.scss', 'dist/css');*/
 
 mix.js('Resources/js/app.js', 'Resources/views/dist/js')
-    .sass('Resources/sass/app.scss', 'Resources/views/dist/css')
+    .sass('Resources/sass/app.scss', 'Resources/views/dist/css');
 
 mix.setResourceRoot('/themes/zero/dist');
 mix.setPublicPath('dist');
