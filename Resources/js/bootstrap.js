@@ -11,7 +11,10 @@ try {
     window.$ = window.jQuery = require('jquery');
     window.Tether = require('tether');
     window.Popper = Popper;
+    const flatpickr = window.flatpickr = require("flatpickr");
+
     require('bootstrap');
+
 } catch (e) {}
 
 window.axios = require('axios');

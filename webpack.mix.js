@@ -28,7 +28,7 @@ mix.polyfill({
 var $prefix = '../..';
 var $suffix = '/themes/Zero'
 var $resource_root = $prefix + $suffix;
-var $public_path = $prefix + process.env.MIX_PUBLIC_FOLDER  + $suffix;
+var $public_path = $prefix + process.env.MIX_PUBLIC_FOLDER + $suffix;
 
 console.log('public_path :' + $public_path);
 console.log('dirname :' + __dirname);
