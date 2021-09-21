@@ -36,7 +36,7 @@
                 <td>{{ $row->description }}</td>
 
                 <td>
-                    {!! $_panel->btnItemAction('scarica_file', ['query_params' => ['theme' => 'ciao']]) !!}
+                    {!! $_panel->btnItemAction('scarica_file', ['query_params' => ['upload_id' => $row->upload_id]]) !!}
                 </td>
             </tr>
 
