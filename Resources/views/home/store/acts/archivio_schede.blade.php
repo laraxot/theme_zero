@@ -35,7 +35,9 @@
 
                 <td>{{ $row->description }}</td>
 
-                <td>{{ $_panel->setRow($row)->itemAction('scarica_file')->url() }}</td>
+                <td>
+                    {!! $_panel->btnItemAction('scarica_file', ['query_params' => ['theme' => 'ciao']]) !!}
+                </td>
             </tr>
 
 
