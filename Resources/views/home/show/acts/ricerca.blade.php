@@ -21,8 +21,8 @@ xotModel('club')
 @section('content')
 
     <!--<div>
-                                                                        <livewire:clubreport::tendina />
-                                                                    </div>-->
+                                                                                                                    <livewire:clubreport::tendina />
+                                                                                                                </div>-->
 
 
     <div class="container-large">
@@ -39,11 +39,14 @@ xotModel('club')
                 @method('post')
 
                 <div class="col-md-3">
-                    {{ Form::bsDate('upload_date', (object) ['year' => 0], ['label' => 'Data di Inserimento', 'style' => 'width:100%', 'class' => 'control-label']) }}
+                    {{ Form::bsDate('upload_date', isset($row->upload_date) ? $row->upload_date : (object) ['year' => 0], ['value' => $row->upload_date, 'label' => 'Data di Inserimento', 'style' => 'width:100%', 'class' => 'control-label']) }}
                 </div>
 
+                @php
+                    // dddx($row);
+                @endphp
                 <div class="col-md-3">
-                    {{ Form::bsText('description', '', ['style' => 'width:100%', 'placeholder' => 'Descrizione', 'label' => 'Descrizione']) }}
+                    {{ Form::bsText('description', $row->description, ['style' => 'width:100%', 'placeholder' => 'Descrizione', 'label' => 'Descrizione']) }}
                 </div>
 
                 <div class="col-md-6"> &nbsp;</div>
@@ -99,6 +102,7 @@ xotModel('club')
     'province_id',
     [],
     [
+        'value' => $row->province_id,
         'style' => 'width:100%',
         'label' => ' ',
         'placeholder' => 'Provincia',
@@ -140,6 +144,7 @@ xotModel('club')
     'club_id',
     [],
     [
+        'value' => $row->club_id,
         'style' => 'width:100%',
         'label' => ' ',
         'placeholder' => 'Categoria',

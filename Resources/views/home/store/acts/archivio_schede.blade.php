@@ -36,7 +36,7 @@
                 <td>{{ $row->description }}</td>
 
                 <td>
-                    {!! $_panel->btnItemAction('scarica_file', ['query_params' => ['upload_id' => $row->upload_id]]) !!}
+                    <a href="{!! $_panel->urlItemAction('scarica_file', ['query_params' => ['upload_id' => $row->upload_id]]) !!}" type="button" class="btn btn-danger">Scarica</a>
                 </td>
             </tr>
 

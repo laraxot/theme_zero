@@ -20,13 +20,17 @@
 
 
 
+
                 <div class="col-md-3">
                     {{ Form::bsDate('upload_date', \Carbon\Carbon::now(), ['label' => 'Data di Inserimento', 'style' => 'width:100%', 'class' => 'control-label']) }}
                 </div>
 
+                <div class="col-md-6">
+                    {{ Form::bsText('description', '', ['style' => 'width:100%', 'placeholder' => 'Descrizione', 'label' => 'Descrizione']) }}
+                </div>
 
 
-                <div class="col-md-9"> &nbsp;</div>
+                <div class="col-md-3"> &nbsp;</div>
 
                 @if (Auth::user()->profile->getAttribute('region_id'))
 
@@ -133,7 +137,7 @@
 
                         <tr>
                             <th>Tipo</th>
-                            <th>Descrizione</th>
+
                             <th>File</th>
                             <th>Flag</th>
                         </tr>
@@ -159,7 +163,7 @@
                                     <td>{{ Form::hidden('report_type_id[]', $row->id) }}
                                         <div class="text-left">{{ $row->title }}</div>
                                     </td>
-                                    <td>{{ Form::bsTextNolabel('description[]', '', ['placeholder' => 'Descrizione']) }}</td>
+
                                     <td>{{ Form::bsPdf($row->id) }}</td>
                                     <td>{{ $row->id != 14 ? Form::bsCheckbox('purposal_flag[]', '', ['label' => 'Nessuna Proposta&nbsp;']) : '' }}
                                     </td>
