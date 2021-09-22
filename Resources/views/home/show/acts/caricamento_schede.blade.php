@@ -211,8 +211,27 @@
 
         }
 
+        function convertToSlug(Text) {
+            return Text
+                .toLowerCase()
+                .replace(/ /g, '-')
+                .replace(/[^\w-]+/g, '');
+        }
 
         document.addEventListener("DOMContentLoaded", function() {
+
+            $("#mainForm [name='upload_date'],#mainForm [name='region_id'],#mainForm [name='province_id'],#mainForm [name='club_id']")
+                .change(() => {
+                    let upload_data = $("#mainForm [name='upload_date']").val();
+                    let region = $("#mainForm [name='region_id'] option:selected").text();
+                    let province = $("#mainForm [name='province_id'] option:selected").text();
+                    let club = $("#mainForm [name='club_id'] option:selected").text();
+
+                    let description = convertToSlug(upload_data + "_" + region + "_" + province + "_" + club);
+
+                    $("#mainForm [name='description']").val(description);
+                });
+
             $('#region_id select').change(() => {
 
                 let region_id = $('#region_id select').val();
