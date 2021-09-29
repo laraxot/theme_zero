@@ -38,6 +38,7 @@
                         <div class="form-group col-sm-12">
 
                             {{ Form::label('region_id', 'Regione: ' . Auth::user()->profile->region->name, ['name' => 'region_id', 'value' => Auth::user()->profile->region->id, 'class' => 'control-label']) }}
+                            {{ Form::hidden('region_id', 'Regione: ' . Auth::user()->profile->region->id, ['name' => 'region_id', 'value' => Auth::user()->profile->region->id, 'class' => 'control-label']) }}
 
                         </div>
 
@@ -63,7 +64,8 @@
                     <div class="col-md-3">
                         <div class="form-group col-sm-12">
 
-                            {{ Form::label('province_id', 'Provincia: ' . Auth::user()->profile->province->id, ['name' => 'province_id', 'value' => Auth::user()->profile->province->id, 'class' => 'control-label']) }}
+                            {{ Form::label('province_id', 'Provincia: ' . Auth::user()->profile->province->name, ['name' => 'province_id', 'value' => Auth::user()->profile->province->id, 'class' => 'control-label']) }}
+                            {{ Form::hidden('province_id', 'Provincia: ' . Auth::user()->profile->province->id, ['name' => 'province_id', 'value' => Auth::user()->profile->province->id, 'class' => 'control-label']) }}
 
                         </div>
                     </div>
@@ -113,6 +115,7 @@
 
                             {{ Form::label('club_id', 'Categoria: ' . Auth::user()->profile->club->name, ['name' => 'club_id', 'value' => Auth::user()->profile->club->id, 'class' => 'control-label']) }}
 
+                            {{ Form::hidden('club_id', 'Categoria: ' . Auth::user()->profile->club->id, ['name' => 'club_id', 'value' => Auth::user()->profile->club->id, 'class' => 'control-label']) }}
 
                         </div>
                     </div>
