@@ -251,6 +251,9 @@
                     let description = convertToSlug(upload_data + "_" + region + "_" + province + "_" + club);
 
                     $("#mainForm [name='description']").val(description.toUpperCase());
+
+                    $("#mainForm [name='description']").trigger('change');
+
                 });
 
             $('#region_id select').change(() => {
