@@ -38,7 +38,7 @@
                         <div class="form-group col-sm-12">
 
                             {{ Form::label('region_id', 'Regione: ' . Auth::user()->profile->region->name, ['name' => 'region_id', 'value' => Auth::user()->profile->region->id, 'class' => 'control-label']) }}
-                            {{ Form::hidden('region_id', 'Regione: ' . Auth::user()->profile->region->id, ['name' => 'region_id', 'value' => Auth::user()->profile->region->id, 'class' => 'control-label']) }}
+                            {{ Form::hidden('region_id', Auth::user()->profile->region->id, ['name' => 'region_id', 'value' => Auth::user()->profile->region->id, 'class' => 'control-label']) }}
 
                         </div>
 
@@ -65,7 +65,7 @@
                         <div class="form-group col-sm-12">
 
                             {{ Form::label('province_id', 'Provincia: ' . Auth::user()->profile->province->name, ['name' => 'province_id', 'value' => Auth::user()->profile->province->id, 'class' => 'control-label']) }}
-                            {{ Form::hidden('province_id', 'Provincia: ' . Auth::user()->profile->province->id, ['name' => 'province_id', 'value' => Auth::user()->profile->province->id, 'class' => 'control-label']) }}
+                            {{ Form::hidden('province_id', Auth::user()->profile->province->id, ['name' => 'province_id', 'value' => Auth::user()->profile->province->id, 'class' => 'control-label']) }}
 
                         </div>
                     </div>
@@ -115,7 +115,7 @@
 
                             {{ Form::label('club_id', 'Categoria: ' . Auth::user()->profile->club->name, ['name' => 'club_id', 'value' => Auth::user()->profile->club->id, 'class' => 'control-label']) }}
 
-                            {{ Form::hidden('club_id', 'Categoria: ' . Auth::user()->profile->club->id, ['name' => 'club_id', 'value' => Auth::user()->profile->club->id, 'class' => 'control-label']) }}
+                            {{ Form::hidden('club_id', Auth::user()->profile->club->id, ['name' => 'club_id', 'value' => Auth::user()->profile->club->id, 'class' => 'control-label']) }}
 
                         </div>
                     </div>
@@ -193,7 +193,10 @@
     </div>
 
 
+    @php
 
+    //dddx(Auth::user()->profile->region->name);
+    @endphp
 
     <script>
         //sostituire con livewire
@@ -227,12 +230,27 @@
                 .change(() => {
                     let upload_data = $("#mainForm [name='upload_date']").val();
                     let region = $("#mainForm [name='region_id'] option:selected").text();
+                    if (region === '') {
+                        @isset(Auth::user()->profile->region->name)
+                            region = '{{ Auth::user()->profile->region->name }}';
+                        @endisset
+                    }
                     let province = $("#mainForm [name='province_id'] option:selected").text();
+                    if (province === '') {
+                        @isset(Auth::user()->profile->province->name)
+                            province = '{{ Auth::user()->profile->province->name }}';
+                        @endisset
+                    }
                     let club = $("#mainForm [name='club_id'] option:selected").text();
+                    if (club === '') {
+                        @isset(Auth::user()->profile->club->name)
+                            club = '{{ Auth::user()->profile->club->name }}';
+                        @endisset
+                    }
 
                     let description = convertToSlug(upload_data + "_" + region + "_" + province + "_" + club);
 
-                    $("#mainForm [name='description']").val(description);
+                    $("#mainForm [name='description']").val(description.toUpperCase());
                 });
 
             $('#region_id select').change(() => {
