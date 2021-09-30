@@ -1,4 +1,4 @@
-@extends ('clubreport::layouts.app')
+@extends ('pub_theme::layouts.app')
 
 @section('content')
 

@@ -110,6 +110,8 @@ xotModel('club')
             ::where('region_id', Auth::user()->profile->region->id)->get(['name', 'id'])->pluck('name', 'id')->toArray(),
     ],
 ) }}
+
+
                         @else
 
 
@@ -191,24 +193,43 @@ xotModel('club')
 
 
         document.addEventListener("DOMContentLoaded", function() {
-            $('#region_id select').change(() => {
 
+            function province_per_regione() {
                 let region_id = $('#region_id select').val();
 
-                let newOptions = provinceInput(region_id);
+                if (region_id !== '') {
 
-                let newOptionElements = "";
+                    let newOptions = provinceInput(region_id);
 
-                newOptionElements += "<option value>Provincia</option>"
+                    let newOptionElements = "";
 
-                newOptions.forEach((v) => {
-                    newOptionElements += "<option value='" + v["id"] + "'>" + v["name"] +
-                        "</option>"
-                });
+                    newOptionElements += "<option value>Provincia</option>"
 
-                $('#province_id select').html(newOptionElements);
+                    newOptions.forEach((v) => {
+                        newOptionElements += "<option value='" + v["id"] + "'>" + v["name"] +
+                            "</option>"
+                    });
+
+                    $('#province_id select').html(newOptionElements);
+                }
+            }
+
+
+
+            $('#region_id select').change(() => {
+
+                province_per_regione();
 
             });
+
+            province_per_regione();
+
+            @isset($row->province_id)
+            
+                $('#province_id select option[value="{{ $row->province_id }}"]').prop('selected',true);
+            
+            @endisset
+
         });
 
         //--- fine sostituzione --//
