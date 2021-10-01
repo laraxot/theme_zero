@@ -167,7 +167,8 @@
                                         <div class="text-left">{{ $row->title }}</div>
                                     </td>
 
-                                    <td>{{ Form::bsPdf($row->id) }}</td>
+                                    <td> {{ Form::bsPlupload($row->id, [], ['class' => 'btn btn-danger']) }}{{-- Form::bsPdf($row->id) --}}
+                                    </td>
                                     <td>{{ $row->id != 14 ? Form::bsCheckbox('purposal_flag[]', '', ['label' => 'Nessuna Proposta&nbsp;']) : '' }}
                                     </td>
                                 </tr>
