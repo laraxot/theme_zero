@@ -16,6 +16,8 @@ xotModel('club')
 ->pluck('name', 'id')
 ->toArray(),
 );*/
+
+//dddx(env('APP_URL'));
 @endphp
 
 @section('content')
@@ -53,7 +55,7 @@ xotModel('club')
 
                     <div class="col-md-3">
                         <div class="form-group col-sm-12">
-                            {{ Form::label('region_id', 'Regione: ' . Auth::user()->profile->region->name, ['name' => 'region_id', 'value' => Auth::user()->profile->region->id, 'class' => 'control-label']) }}
+                            {{ Form::label('region_id', 'Regione: ' . Auth::user()->profile->region->name, ['class' => 'control-label']) }}
 
                             {{ Form::hidden('region_id', Auth::user()->profile->region->id, ['name' => 'region_id', 'value' => Auth::user()->profile->region->id, 'class' => 'control-label']) }}
 
@@ -82,7 +84,7 @@ xotModel('club')
                 @if (Auth::user()->profile->getAttribute('province_id'))
                     <div class="col-md-3">
                         <div class="form-group col-sm-12">
-                            {{ Form::label('province_id', 'Provincia: ' . Auth::user()->profile->province->id, ['name' => 'province_id', 'value' => Auth::user()->profile->province->id, 'class' => 'control-label']) }}
+                            {{ Form::label('province_id', 'Provincia: ' . Auth::user()->profile->province->name, ['class' => 'control-label']) }}
 
                             {{ Form::hidden('province_id', Auth::user()->profile->province->id, ['name' => 'province_id', 'value' => Auth::user()->profile->province->id, 'class' => 'control-label']) }}
 
@@ -134,7 +136,7 @@ xotModel('club')
                 @if (Auth::user()->profile->getAttribute('club_id'))
                     <div class="col-md-3">
                         <div class="form-group col-sm-12">
-                            {{ Form::label('club_id', 'Categoria: ' . Auth::user()->profile->club->name, ['name' => 'club_id', 'value' => Auth::user()->profile->club->id, 'class' => 'control-label']) }}
+                            {{ Form::label('club_id', 'Categoria: ' . Auth::user()->profile->club->name, ['class' => 'control-label']) }}
 
                             {{ Form::hidden('club_id', Auth::user()->profile->club->id, ['name' => 'club_id', 'value' => Auth::user()->profile->club->id, 'class' => 'control-label']) }}
 
@@ -195,7 +197,7 @@ xotModel('club')
         document.addEventListener("DOMContentLoaded", function() {
 
             function province_per_regione() {
-                let region_id = $('#region_id select').val();
+                let region_id = $('[name="region_id"]').val();
 
                 if (region_id !== '') {
 

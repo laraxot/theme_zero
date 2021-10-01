@@ -1,3 +1,9 @@
+@php
+session()->put('timestamp_caricamento_schede', microtime(true));
+//session()->getId()
+//session('timestamp_caricamento_schede'));
+@endphp
+
 @extends ('pub_theme::layouts.app')
 
 @section('content')

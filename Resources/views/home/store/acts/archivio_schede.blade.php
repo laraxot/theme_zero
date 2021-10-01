@@ -8,7 +8,7 @@
             {{-- <th>Titolo</th> --}}
             <th>Regione</th>
             <th>Provincia</th>
-            <th>Club</th>
+            <th>Categoria</th>
             <th>Descrizione</th>
             <th>File</th>
         </tr>
