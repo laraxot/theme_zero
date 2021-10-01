@@ -60,7 +60,7 @@ session()->put('timestamp_caricamento_schede', microtime(true));
         'label' => ' ',
         'placeholder' => 'Regione',
         'options' => xotModel('region')
-            ::get(['name', 'id'])->pluck('name', 'id')->toArray(),
+            ::orderBy('name', 'asc')->get(['name', 'id'])->pluck('name', 'id')->toArray(),
     ],
 ) }}
                     </div>
@@ -93,7 +93,7 @@ session()->put('timestamp_caricamento_schede', microtime(true));
         'label' => ' ',
         'placeholder' => 'Provincia',
         'options' => xotModel('province')
-            ::where('region_id', Auth::user()->profile->region->id)->get(['name', 'id'])->pluck('name', 'id')->toArray(),
+            ::where('region_id', Auth::user()->profile->region->id)->orderBy('name', 'asc')->get(['name', 'id'])->pluck('name', 'id')->toArray(),
     ],
 ) }}
                         @else
@@ -135,7 +135,7 @@ session()->put('timestamp_caricamento_schede', microtime(true));
         'label' => ' ',
         'placeholder' => 'Categoria',
         'options' => xotModel('club')
-            ::get(['name', 'id'])->pluck('name', 'id')->toArray(),
+            ::orderBy('name', 'asc')->get(['name', 'id'])->pluck('name', 'id')->toArray(),
     ],
 ) }}
                     </div>
@@ -210,7 +210,7 @@ session()->put('timestamp_caricamento_schede', microtime(true));
         function provinceInput(region_id) {
 
 
-            const table = {!! xotModel('province')->get(['name', 'id', 'region_id'])->toJson() !!};
+            const table = {!! xotModel('province')->orderBy('name', 'asc')->get(['name', 'id', 'region_id'])->toJson() !!};
 
             const filtered_results = table.filter((v) => {
                 if (v.region_id == region_id) {
