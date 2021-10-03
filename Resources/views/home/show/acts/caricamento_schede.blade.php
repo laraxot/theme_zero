@@ -35,8 +35,20 @@ session()->put('timestamp_caricamento_schede', microtime(true));
                     {{ Form::bsText('description', '', ['style' => 'width:100%', 'placeholder' => 'Descrizione', 'label' => 'Descrizione']) }}
                 </div>
 
-
                 <div class="col-md-3"> &nbsp;</div>
+
+                <div class="col-md-3">
+                    {{ Form::bsSelect(
+    'territorial_level',
+    [],
+    [
+        'style' => 'width:100%',
+        'label' => ' ',
+        'placeholder' => 'Livello Territoriale',
+        'options' => [1 => 'Nazionale', 2 => 'Regionale', 3 => 'Provinciale'],
+    ],
+) }}
+                </div>
 
                 @if (Auth::user()->profile->getAttribute('region_id'))
 
@@ -51,7 +63,7 @@ session()->put('timestamp_caricamento_schede', microtime(true));
                     </div>
 
                 @else
-                    <div class="col-md-3" id="region_id">
+                    <div class="col-md-3 territory_1 d-none" id="region_id">
                         {{ Form::bsSelect(
     'region_id',
     [],
@@ -66,6 +78,10 @@ session()->put('timestamp_caricamento_schede', microtime(true));
                     </div>
                 @endif
 
+                </span>
+
+
+
                 @if (Auth::user()->profile->getAttribute('province_id'))
                     <div class="col-md-3">
                         <div class="form-group col-sm-12">
@@ -77,7 +93,7 @@ session()->put('timestamp_caricamento_schede', microtime(true));
                     </div>
                 @else
 
-                    <div class="col-md-3" id="province_id">
+                    <div class="col-md-3 territory_2 d-none" id="province_id">
 
 
 
@@ -233,34 +249,56 @@ session()->put('timestamp_caricamento_schede', microtime(true));
 
         document.addEventListener("DOMContentLoaded", function() {
 
+            function rewrite_description() {
+                let upload_data = $("#mainForm [name='upload_date']").val();
+                let region = $("#mainForm [name='region_id']:visible option:selected").text();
+                if (region === '') {
+                    @isset(Auth::user()->profile->region->name)
+                        region = '{{ Auth::user()->profile->region->name }}';
+                    @endisset
+                }
+                let province = $("#mainForm [name='province_id']:visible option:selected").text();
+                if (province === '') {
+                    @isset(Auth::user()->profile->province->name)
+                        province = '{{ Auth::user()->profile->province->name }}';
+                    @endisset
+                }
+                let club = $("#mainForm [name='club_id'] option:selected").text();
+                if (club === '') {
+                    @isset(Auth::user()->profile->club->name)
+                        club = '{{ Auth::user()->profile->club->name }}';
+                    @endisset
+                }
+
+                let temp_description = '';
+
+                if (upload_data) {
+                    temp_description += upload_data;
+                }
+
+                if (region !== "" && region.toUpperCase() !== "REGIONE") {
+                    temp_description += "_" + region;
+                }
+
+                if (province !== "" && province.toUpperCase() !== "PROVINCIA") {
+                    temp_description += "_" + province;
+                }
+
+                if (club.toUpperCase() !== "CATEGORIA") {
+                    temp_description += "_" + club;
+                }
+
+
+                let description = convertToSlug(temp_description);
+
+                $("#mainForm [name='description']").val(description.toUpperCase());
+
+                $("#mainForm [name='description']").trigger('change');
+            }
+
             $("#mainForm [name='upload_date'],#mainForm [name='region_id'],#mainForm [name='province_id'],#mainForm [name='club_id']")
                 .change(() => {
-                    let upload_data = $("#mainForm [name='upload_date']").val();
-                    let region = $("#mainForm [name='region_id'] option:selected").text();
-                    if (region === '') {
-                        @isset(Auth::user()->profile->region->name)
-                            region = '{{ Auth::user()->profile->region->name }}';
-                        @endisset
-                    }
-                    let province = $("#mainForm [name='province_id'] option:selected").text();
-                    if (province === '') {
-                        @isset(Auth::user()->profile->province->name)
-                            province = '{{ Auth::user()->profile->province->name }}';
-                        @endisset
-                    }
-                    let club = $("#mainForm [name='club_id'] option:selected").text();
-                    if (club === '') {
-                        @isset(Auth::user()->profile->club->name)
-                            club = '{{ Auth::user()->profile->club->name }}';
-                        @endisset
-                    }
-
-                    let description = convertToSlug(upload_data + "_" + region + "_" + province + "_" + club);
-
-                    $("#mainForm [name='description']").val(description.toUpperCase());
-
-                    $("#mainForm [name='description']").trigger('change');
-
+                    rewrite_description();
                 });
 
             $('#region_id select').change(() => {
@@ -281,6 +319,25 @@ session()->put('timestamp_caricamento_schede', microtime(true));
                 $('#province_id select').html(newOptionElements);
 
             });
+
+            $('select#territorial_level').change(() => {
+
+                let territory_level = $('select#territorial_level').val();
+
+                $('.territory_1').addClass('d-none');
+                $('.territory_2').addClass('d-none');
+
+                if (territory_level === '2') {
+                    $('.territory_1').removeClass('d-none');
+                } else if (territory_level === '3') {
+                    $('.territory_1').removeClass('d-none');
+                    $('.territory_2').removeClass('d-none');
+                }
+
+                rewrite_description();
+
+            });
+
         });
 
         //--- fine sostituzione --//
