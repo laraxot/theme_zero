@@ -58,18 +58,52 @@
             transform: translate(-50%, -50%);
         }
 
-        @import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700&display=swap');
+        /*@import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700&display=swap');
 
-        * {
-            margin: 0;
-            padding: 0;
-            outline: none;
-            box-sizing: border-box;
-            font-family: 'Montserrat', sans-serif;
+                                                                                            * {
+                                                                                                margin: 0;
+                                                                                                padding: 0;
+                                                                                                outline: none;
+                                                                                                box-sizing: border-box;
+                                                                                                font-family: 'Montserrat', sans-serif;
+                                                                                            }*/
+
+
+        /*div {
+                                                                    font-family: 'Futura';
+                                                                }*/
+
+        @font-face {
+            font-family: Futura;
+
+            /*src: url("fonts/futura/FuturaStd-Bold.otf") format("opentype");
+                                                            src: url("fonts/futura/FuturaStd-BoldOblique.otf") format("opentype");
+                                                            src: url("fonts/futura/FuturaStd-Book.otf") format("opentype");
+                                                            src: url("fonts/futura/FuturaStd-BookOblique.otf") format("opentype");
+                                                            src: url("fonts/futura/FuturaStd-Condensed.otf") format("opentype");
+                                                            src: url("fonts/futura/FuturaStd-CondensedBold.otf") format("opentype");
+                                                            src: url("fonts/futura/FuturaStd-CondensedBoldObl.otf") format("opentype");
+                                                            src: url("fonts/futura/FuturaStd-CondensedExtraBd.otf") format("opentype");
+                                                            src: url("fonts/futura/FuturaStd-CondensedLight.otf") format("opentype");
+                                                            src: url("fonts/futura/FuturaStd-CondensedLightObl.otf") format("opentype");
+                                                            src: url("fonts/futura/FuturaStd-CondensedOblique.otf") format("opentype");
+                                                            src: url("fonts/futura/FuturaStd-CondExtraBoldObl.otf") format("opentype");
+                                                            src: url("fonts/futura/FuturaStd-ExtraBold.otf") format("opentype");
+                                                            src: url("fonts/futura/FuturaStd-ExtraBoldOblique.otf") format("opentype");
+                                                            src: url("fonts/futura/FuturaStd-Heavy.otf") format("opentype");
+                                                            src: url("fonts/futura/FuturaStd-HeavyOblique.otf") format("opentype");
+                                                            src: url("fonts/futura/FuturaStd-Light.otf") format("opentype");
+                                                            src: url("fonts/futura/FuturaStd-LightOblique.otf") format("opentype");*/
+            src: url("/fonts/futura/FuturaStd-Medium.otf") format("opentype");
+            /*src: url("fonts/futura/FuturaStd-MediumOblique.otf") format("opentype");*/
+
         }
+
 
         body {
             background: #f2f2f2;
+            font-family: 'Futura';
+            font-size: 2vh;
             /* background-image: url('{{ Theme::asset('pub_theme::img/homebackground.jpg') }}');*/
         }
 
@@ -109,7 +143,7 @@
         }
 
         nav .nav-items li a:hover {
-            color: #e3342f;
+            color: silver;
         }
 
         nav form {
@@ -137,14 +171,14 @@
             padding: 0 15px;
             color: #fff;
             font-size: 17px;
-            background: #e3342f;
+            background: silver;
             border: none;
             border-radius: 2px;
             cursor: pointer;
         }
 
         nav form button:hover {
-            background: #e3342f;
+            background: silver;
         }
 
         nav .menu-icon,
@@ -190,7 +224,7 @@
                 height: 100%;
                 padding: 10px 50px 0 50px;
                 text-align: center;
-                background: #e3342f;
+                background: silver;
                 display: inline-block;
                 transition: left 0.3s ease;
             }
@@ -232,7 +266,7 @@
                 height: 0;
                 z-index: -1;
                 border: 10px solid transparent;
-                border-bottom-color: #e3342f;
+                border-bottom-color: silver;
                 margin: -20px 0 0;
             }
 
@@ -241,7 +275,7 @@
                 content: '';
                 height: 60px;
                 padding: 2px;
-                background: #e3342f;
+                background: silver;
                 border-radius: 2px;
                 min-width: calc(100% + 20px);
                 z-index: -2;
@@ -292,7 +326,7 @@
         }
 
         nav .logo.space {
-            color: red;
+            color: silver;
             padding: 0 5px 0 0;
         }
 
@@ -358,17 +392,17 @@
             @endphp
 
 
-            <li><a href="/">Home</a>
-            </li>
+            <!--<li><a href="/">Home</a>
+                                                                                                                </li>-->
 
             @php
                 
                 //dddx(\Auth::user()->perm_type);
                 /*dddx(
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    \Auth::user()
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ->rights->where('right_define_name', 'writer')
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ->count(),
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                );*/
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    \Auth::user()
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ->rights->where('right_define_name', 'writer')
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ->count(),
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                );*/
             @endphp
 
             @if (\Auth::check())
@@ -386,7 +420,7 @@
                     </li>
                 @endcan
 
-                <li><a href="#">Profilo</a>
+                <li><a href="{{ Panel::getHomePanel()->itemAction('modifica_password')->url() }}">Profilo</a>
                 </li>
                 <li><a href="{{ route('logout') }}"
                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -398,7 +432,7 @@
             @endif
 
             <!--<li><a href="#">Contact</a></li>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <li><a href="#">Feedback</a></li>-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <li><a href="#">Feedback</a></li>-->
         </div>
         <div class="search-icon">
             <span class="fas fa-search"></span>
@@ -407,9 +441,9 @@
             <span class="fas fa-times"></span>
         </div>
         <!--<form action="#">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <input type="search" class="search-data" placeholder="Search" required>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button type="submit" class="fas fa-search"></button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </form>-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <input type="search" class="search-data" placeholder="Search" required>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <button type="submit" class="fas fa-search"></button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </form>-->
     </nav>
 
     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

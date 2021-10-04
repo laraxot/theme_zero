@@ -27,45 +27,44 @@ xotModel('club')
 
     <div class="container-large">
 
-        <div class="row clearfix">
+        <!--<div class="row clearfix">-->
+        <div class="col-md-12 p-0 pt-3">
 
-            <div class="col-md-12 p-3">
+            @php
+                //dddx($row->region_id);
+            @endphp
 
-                @php
-                    //dddx($row->region_id);
-                @endphp
+            {!! Form::model($row, ['url' => Request::fullUrl(), 'id' => 'mainForm', 'class' => 'form-inline']) !!}
+            @method('post')
 
-                {!! Form::model($row, ['url' => Request::fullUrl(), 'id' => 'mainForm', 'class' => 'form-inline']) !!}
-                @method('post')
+            <div class="col-md-3">
+                {{ Form::bsDate('upload_date', isset($row->upload_date) ? $row->upload_date : (object) ['year' => 0], ['value' => $row->upload_date, 'label' => 'Data di Inserimento', 'style' => 'width:100%', 'class' => 'control-label']) }}
+            </div>
+
+            @php
+                // dddx($row);
+            @endphp
+            <div class="col-md-3">
+                {{ Form::bsText('description', $row->description, ['style' => 'width:100%', 'placeholder' => 'Descrizione', 'label' => 'Descrizione']) }}
+            </div>
+
+            <div class="col-md-6"> &nbsp;</div>
+
+            @if (Auth::user()->profile->getAttribute('region_id'))
 
                 <div class="col-md-3">
-                    {{ Form::bsDate('upload_date', isset($row->upload_date) ? $row->upload_date : (object) ['year' => 0], ['value' => $row->upload_date, 'label' => 'Data di Inserimento', 'style' => 'width:100%', 'class' => 'control-label']) }}
-                </div>
+                    <div class="form-group col-sm-12">
+                        {{ Form::label('region_id', 'Regione: ' . Auth::user()->profile->region->name, ['class' => 'control-label']) }}
 
-                @php
-                    // dddx($row);
-                @endphp
-                <div class="col-md-3">
-                    {{ Form::bsText('description', $row->description, ['style' => 'width:100%', 'placeholder' => 'Descrizione', 'label' => 'Descrizione']) }}
-                </div>
-
-                <div class="col-md-6"> &nbsp;</div>
-
-                @if (Auth::user()->profile->getAttribute('region_id'))
-
-                    <div class="col-md-3">
-                        <div class="form-group col-sm-12">
-                            {{ Form::label('region_id', 'Regione: ' . Auth::user()->profile->region->name, ['class' => 'control-label']) }}
-
-                            {{ Form::hidden('region_id', Auth::user()->profile->region->id, ['name' => 'region_id', 'value' => Auth::user()->profile->region->id, 'class' => 'control-label']) }}
-
-                        </div>
+                        {{ Form::hidden('region_id', Auth::user()->profile->region->id, ['name' => 'region_id', 'value' => Auth::user()->profile->region->id, 'class' => 'control-label']) }}
 
                     </div>
 
-                @else
-                    <div class="col-md-3" id="region_id">
-                        {{ Form::bsSelect(
+                </div>
+
+            @else
+                <div class="col-md-3" id="region_id">
+                    {{ Form::bsSelect(
     'region_id',
     [],
     [
@@ -78,29 +77,29 @@ xotModel('club')
             ::orderBy('name', 'asc')->get(['name', 'id'])->pluck('name', 'id')->toArray(),
     ],
 ) }}
+                </div>
+            @endif
+
+            @if (Auth::user()->profile->getAttribute('province_id'))
+                <div class="col-md-3">
+                    <div class="form-group col-sm-12">
+                        {{ Form::label('province_id', 'Provincia: ' . Auth::user()->profile->province->name, ['class' => 'control-label']) }}
+
+                        {{ Form::hidden('province_id', Auth::user()->profile->province->id, ['name' => 'province_id', 'value' => Auth::user()->profile->province->id, 'class' => 'control-label']) }}
+
                     </div>
-                @endif
+                </div>
+            @else
 
-                @if (Auth::user()->profile->getAttribute('province_id'))
-                    <div class="col-md-3">
-                        <div class="form-group col-sm-12">
-                            {{ Form::label('province_id', 'Provincia: ' . Auth::user()->profile->province->name, ['class' => 'control-label']) }}
-
-                            {{ Form::hidden('province_id', Auth::user()->profile->province->id, ['name' => 'province_id', 'value' => Auth::user()->profile->province->id, 'class' => 'control-label']) }}
-
-                        </div>
-                    </div>
-                @else
-
-                    <div class="col-md-3" id="province_id">
+                <div class="col-md-3" id="province_id">
 
 
 
-                        @if (Auth::user()->profile->getAttribute('region_id'))
+                    @if (Auth::user()->profile->getAttribute('region_id'))
 
 
 
-                            {{ Form::bsSelect(
+                        {{ Form::bsSelect(
     'province_id',
     [],
     [
@@ -114,10 +113,10 @@ xotModel('club')
 ) }}
 
 
-                        @else
+                    @else
 
 
-                            {{ Form::bsSelect(
+                        {{ Form::bsSelect(
     'province_id',
     [],
     [
@@ -127,25 +126,25 @@ xotModel('club')
         'options' => [] /*xotModel('province')->get(['name', 'id'])->pluck('name', 'id')->toArray()*/,
     ],
 ) }}
-                        @endif
+                    @endif
+                </div>
+            @endif
+
+
+
+            @if (Auth::user()->profile->getAttribute('club_id'))
+                <div class="col-md-3">
+                    <div class="form-group col-sm-12">
+                        {{ Form::label('club_id', 'Categoria: ' . Auth::user()->profile->club->name, ['class' => 'control-label']) }}
+
+                        {{ Form::hidden('club_id', Auth::user()->profile->club->id, ['name' => 'club_id', 'value' => Auth::user()->profile->club->id, 'class' => 'control-label']) }}
+
+
                     </div>
-                @endif
-
-
-
-                @if (Auth::user()->profile->getAttribute('club_id'))
-                    <div class="col-md-3">
-                        <div class="form-group col-sm-12">
-                            {{ Form::label('club_id', 'Categoria: ' . Auth::user()->profile->club->name, ['class' => 'control-label']) }}
-
-                            {{ Form::hidden('club_id', Auth::user()->profile->club->id, ['name' => 'club_id', 'value' => Auth::user()->profile->club->id, 'class' => 'control-label']) }}
-
-
-                        </div>
-                    </div>
-                @else
-                    <div class="col-md-3">
-                        {{ Form::bsSelect(
+                </div>
+            @else
+                <div class="col-md-3">
+                    {{ Form::bsSelect(
     'club_id',
     [],
     [
@@ -154,21 +153,21 @@ xotModel('club')
         'label' => ' ',
         'placeholder' => 'Categoria',
         'options' => xotModel('club')
-            ::orderBy('name', 'asc')->get(['name', 'id'])->pluck('name', 'id')->toArray(),
+            ::where('territorial_only', '!=', '1')->orderBy('name', 'asc')->get(['name', 'id'])->pluck('name', 'id')->toArray(),
     ],
 ) }}
-                    </div>
-                @endif
+                </div>
+            @endif
 
 
 
 
-                {{ Form::bsSubmit('Cerca', [], ['class' => 'btn btn-danger']) }}
+            {{ Form::bsSubmit('Cerca', [], ['class' => 'btn btn-danger']) }}
 
-                {!! Form::close() !!}
-            </div>
+            {!! Form::close() !!}
         </div>
     </div>
+    <!--</div>-->
 
 
     @include('pub_theme::home.store.acts.archivio_schede')
@@ -193,6 +192,59 @@ xotModel('club')
 
         }
 
+        function clubInput(bool_centro_regolatore) {
+
+            let table = [];
+
+            if (bool_centro_regolatore === true) {
+                table = {!! xotModel('club')->orderBy('name', 'asc')->get(['name', 'id', 'region_id'])->toJson() !!};
+            } else {
+                table = {!! xotModel('club')->where('territorial_only', '!=', '1')->orderBy('name', 'asc')->get(['name', 'id', 'region_id'])->toJson() !!};
+            }
+
+            return table;
+
+        }
+
+        function rewriteClub() {
+
+            let bool_centro_regolatore = false;
+
+            let region = $("#mainForm [name='region_id']:visible option:selected").text();
+            if (region === '') {
+                @isset(Auth::user()->profile->region->name)
+                    region = '{{ Auth::user()->profile->region->name }}';
+                @endisset
+            }
+            let province = $("#mainForm [name='province_id']:visible option:selected").text();
+            if (province === '') {
+                @isset(Auth::user()->profile->province->name)
+                    province = '{{ Auth::user()->profile->province->name }}';
+                @endisset
+            }
+
+            if (region !== "" && region.toUpperCase() !== "REGIONE") {
+                bool_centro_regolatore = true;
+            }
+
+            if (province !== "" && province.toUpperCase() !== "PROVINCIA") {
+                bool_centro_regolatore = true;
+            }
+
+
+            let newOptions = clubInput(bool_centro_regolatore);
+
+            let newOptionElements = "";
+
+            newOptionElements += "<option value>Categoria</option>"
+
+            newOptions.forEach((v) => {
+                newOptionElements += "<option value='" + v["id"] + "'>" + v["name"] +
+                    "</option>"
+            });
+
+            $('select#club_id').html(newOptionElements);
+        }
 
         document.addEventListener("DOMContentLoaded", function() {
 
@@ -216,6 +268,10 @@ xotModel('club')
                 }
             }
 
+            $("#mainForm [name='region_id'],#mainForm [name='province_id']")
+                .change(() => {
+                    rewriteClub();
+                });
 
 
             $('#region_id select').change(() => {

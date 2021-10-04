@@ -11,34 +11,34 @@ session()->put('timestamp_caricamento_schede', microtime(true));
 
     <div class="container-large">
 
-        <div class="row clearfix">
+        <!--<div class="row clearfix">-->
 
-            <div class="col-md-12 mt-3">
+        <div class="col-md-12 p-0 pt-3">
 
-                @php
-                    //dddx(get_defined_vars());
-                @endphp
+            @php
+                //dddx(get_defined_vars());
+            @endphp
 
-                {!! Form::model(null, ['url' => Request::fullUrl(), 'id' => 'mainForm', 'class' => 'form-inline']) !!}
-                @method('post')
-
-
+            {!! Form::model(null, ['url' => Request::fullUrl(), 'id' => 'mainForm', 'class' => 'form-inline']) !!}
+            @method('post')
 
 
 
 
-                <div class="col-md-3">
-                    {{ Form::bsDate('upload_date', \Carbon\Carbon::now(), ['label' => 'Data di Inserimento', 'style' => 'width:100%', 'class' => 'control-label']) }}
-                </div>
 
-                <div class="col-md-6">
-                    {{ Form::bsText('description', '', ['style' => 'width:100%', 'placeholder' => 'Descrizione', 'label' => 'Descrizione']) }}
-                </div>
 
-                <div class="col-md-3"> &nbsp;</div>
+            <div class="col-md-3">
+                {{ Form::bsDate('upload_date', \Carbon\Carbon::now(), ['label' => 'Data di Inserimento', 'style' => 'width:100%', 'class' => 'control-label']) }}
+            </div>
 
-                <div class="col-md-3">
-                    {{ Form::bsSelect(
+            <div class="col-md-6">
+                {{ Form::bsText('description', '', ['style' => 'width:100%', 'placeholder' => 'Descrizione', 'label' => 'Descrizione']) }}
+            </div>
+
+            <div class="col-md-3"> &nbsp;</div>
+
+            <div class="col-md-3">
+                {{ Form::bsSelect(
     'territorial_level',
     [],
     [
@@ -48,23 +48,23 @@ session()->put('timestamp_caricamento_schede', microtime(true));
         'options' => [1 => 'Nazionale', 2 => 'Regionale', 3 => 'Provinciale'],
     ],
 ) }}
-                </div>
+            </div>
 
-                @if (Auth::user()->profile->getAttribute('region_id'))
+            @if (Auth::user()->profile->getAttribute('region_id'))
 
-                    <div class="col-md-3">
-                        <div class="form-group col-sm-12">
+                <div class="col-md-3">
+                    <div class="form-group col-sm-12">
 
-                            {{ Form::label('region_id', 'Regione: ' . Auth::user()->profile->region->name, ['name' => 'region_id', 'value' => Auth::user()->profile->region->id, 'class' => 'control-label']) }}
-                            {{ Form::hidden('region_id', Auth::user()->profile->region->id, ['name' => 'region_id', 'value' => Auth::user()->profile->region->id, 'class' => 'control-label']) }}
-
-                        </div>
+                        {{ Form::label('region_id', 'Regione: ' . Auth::user()->profile->region->name, ['name' => 'region_id', 'value' => Auth::user()->profile->region->id, 'class' => 'control-label']) }}
+                        {{ Form::hidden('region_id', Auth::user()->profile->region->id, ['name' => 'region_id', 'value' => Auth::user()->profile->region->id, 'class' => 'control-label']) }}
 
                     </div>
 
-                @else
-                    <div class="col-md-3 territory_1 d-none" id="region_id">
-                        {{ Form::bsSelect(
+                </div>
+
+            @else
+                <div class="col-md-3 territory_1 d-none" id="region_id">
+                    {{ Form::bsSelect(
     'region_id',
     [],
     [
@@ -75,33 +75,33 @@ session()->put('timestamp_caricamento_schede', microtime(true));
             ::orderBy('name', 'asc')->get(['name', 'id'])->pluck('name', 'id')->toArray(),
     ],
 ) }}
+                </div>
+            @endif
+
+            </span>
+
+
+
+            @if (Auth::user()->profile->getAttribute('province_id'))
+                <div class="col-md-3">
+                    <div class="form-group col-sm-12">
+
+                        {{ Form::label('province_id', 'Provincia: ' . Auth::user()->profile->province->name, ['name' => 'province_id', 'value' => Auth::user()->profile->province->id, 'class' => 'control-label']) }}
+                        {{ Form::hidden('province_id', Auth::user()->profile->province->id, ['name' => 'province_id', 'value' => Auth::user()->profile->province->id, 'class' => 'control-label']) }}
+
                     </div>
-                @endif
+                </div>
+            @else
 
-                </span>
-
-
-
-                @if (Auth::user()->profile->getAttribute('province_id'))
-                    <div class="col-md-3">
-                        <div class="form-group col-sm-12">
-
-                            {{ Form::label('province_id', 'Provincia: ' . Auth::user()->profile->province->name, ['name' => 'province_id', 'value' => Auth::user()->profile->province->id, 'class' => 'control-label']) }}
-                            {{ Form::hidden('province_id', Auth::user()->profile->province->id, ['name' => 'province_id', 'value' => Auth::user()->profile->province->id, 'class' => 'control-label']) }}
-
-                        </div>
-                    </div>
-                @else
-
-                    <div class="col-md-3 territory_2 d-none" id="province_id">
+                <div class="col-md-3 territory_2 d-none" id="province_id">
 
 
 
-                        @if (Auth::user()->profile->getAttribute('region_id'))
+                    @if (Auth::user()->profile->getAttribute('region_id'))
 
 
 
-                            {{ Form::bsSelect(
+                        {{ Form::bsSelect(
     'province_id',
     [],
     [
@@ -112,10 +112,10 @@ session()->put('timestamp_caricamento_schede', microtime(true));
             ::where('region_id', Auth::user()->profile->region->id)->orderBy('name', 'asc')->get(['name', 'id'])->pluck('name', 'id')->toArray(),
     ],
 ) }}
-                        @else
+                    @else
 
 
-                            {{ Form::bsSelect(
+                        {{ Form::bsSelect(
     'province_id',
     [],
     [
@@ -125,25 +125,25 @@ session()->put('timestamp_caricamento_schede', microtime(true));
         'options' => [] /*xotModel('province')->get(['name', 'id'])->pluck('name', 'id')->toArray()*/,
     ],
 ) }}
-                        @endif
+                    @endif
+                </div>
+            @endif
+
+
+
+            @if (Auth::user()->profile->getAttribute('club_id'))
+                <div class="col-md-3">
+                    <div class="form-group col-sm-12">
+
+                        {{ Form::label('club_id', 'Categoria: ' . Auth::user()->profile->club->name, ['name' => 'club_id', 'value' => Auth::user()->profile->club->id, 'class' => 'control-label']) }}
+
+                        {{ Form::hidden('club_id', Auth::user()->profile->club->id, ['name' => 'club_id', 'value' => Auth::user()->profile->club->id, 'class' => 'control-label']) }}
+
                     </div>
-                @endif
-
-
-
-                @if (Auth::user()->profile->getAttribute('club_id'))
-                    <div class="col-md-3">
-                        <div class="form-group col-sm-12">
-
-                            {{ Form::label('club_id', 'Categoria: ' . Auth::user()->profile->club->name, ['name' => 'club_id', 'value' => Auth::user()->profile->club->id, 'class' => 'control-label']) }}
-
-                            {{ Form::hidden('club_id', Auth::user()->profile->club->id, ['name' => 'club_id', 'value' => Auth::user()->profile->club->id, 'class' => 'control-label']) }}
-
-                        </div>
-                    </div>
-                @else
-                    <div class="col-md-3">
-                        {{ Form::bsSelect(
+                </div>
+            @else
+                <div class="col-md-3">
+                    {{ Form::bsSelect(
     'club_id',
     [],
     [
@@ -151,74 +151,83 @@ session()->put('timestamp_caricamento_schede', microtime(true));
         'label' => ' ',
         'placeholder' => 'Categoria',
         'options' => xotModel('club')
-            ::orderBy('name', 'asc')->get(['name', 'id'])->pluck('name', 'id')->toArray(),
+            ::where('territorial_only', '!=', '1')->orderBy('name', 'asc')->get(['name', 'id'])->pluck('name', 'id')->toArray(),
     ],
 ) }}
-                    </div>
-                @endif
-
-                <div class="col-md-12 mt-3">
-                    <table class="table table-hover table-striped">
-
-                        <tr>
-                            <th>Tipo</th>
-
-                            <th>File</th>
-                            <th>Flag</th>
-                        </tr>
-
-                        @php
-                            //dddx($rows);
-                        @endphp
-
-                        @foreach ($rows as $row)
-
-                            @can('viewRow', Panel::get($row))
 
 
+                </div>
+            @endif
+
+            <div class="col-md-12 mt-3">
+                <table class="table table-hover table-striped">
+
+                    <tr>
+                        <th>Tipo</th>
+
+                        <th>File</th>
+                        <th>Flag</th>
+                    </tr>
+
+                    @php
+                        //dddx($rows);
+                    @endphp
+
+                    @foreach ($rows as $row)
+
+                        @can('viewRow', Panel::get($row))
 
 
 
-                                {{-- $table->integer('report_type_id');
+
+
+                            {{-- $table->integer('report_type_id');
                     $table->text('path');
                     $table->text('title');
                     $table->text('description') --}}
 
-                                <tr>
-                                    <td>{{ Form::hidden('report_type_id[]', $row->id) }}
-                                        <div class="text-left">{{ $row->title }}</div>
-                                    </td>
+                            <tr>
+                                <td>{{ Form::hidden('report_type_id[]', $row->id) }}
+                                    <div class="text-left">{{ $row->title }}</div>
+                                </td>
 
-                                    <td> {{ Form::bsPlupload($row->id, [], ['class' => 'btn btn-danger']) }}{{-- Form::bsPdf($row->id) --}}
-                                    </td>
-                                    <td>{{ $row->id != 14 ? Form::bsCheckbox('purposal_flag[]', '', ['label' => 'Nessuna Proposta&nbsp;']) : '' }}
-                                    </td>
-                                </tr>
-
-
+                                <td> {{ Form::bsPlupload($row->id, [], ['class' => 'btn btn-danger']) }}{{-- Form::bsPdf($row->id) --}}
+                                </td>
+                                <td>{{ $row->id != 14 ? Form::bsCheckbox('purposal_flag[]', '', ['label' => 'Nessuna Proposta&nbsp;']) : '' }}
+                                </td>
+                            </tr>
 
 
-                            @endcan
-                        @endforeach
 
-                    </table>
-                </div>
 
-                <div class="col-md-12 text-right">
+                        @endcan
+                    @endforeach
 
-                    {{ Form::bsSubmitRightBigShowHide('Invia') }}
-                </div>
-
-                {!! Form::close() !!}
-
+                </table>
             </div>
+
+            <div class="col-md-12 text-right">
+
+                {{ Form::bsSubmitRightBigShowHide('Invia') }}
+            </div>
+
+            {!! Form::close() !!}
+
         </div>
     </div>
+    <!--</div>-->
 
 
     @php
 
     //dddx(Auth::user()->profile->region->name);
+    /*dddx(
+                                                                                                                                                    xotModel('club')
+                                                                                                                                                        ->orderBy('name', 'asc')
+                                                                                                                                                        ->get(['name', 'id'])
+                                                                                                                                                        ->pluck('name', 'id')
+                                                                                                                                                        ->toArray()->
+                                                                                                                                                );*/
     @endphp
 
     <script>
@@ -240,6 +249,107 @@ session()->put('timestamp_caricamento_schede', microtime(true));
 
         }
 
+        function clubInput(bool_centro_regolatore) {
+
+            let table = [];
+
+            if (bool_centro_regolatore === true) {
+                table = {!! xotModel('club')->orderBy('name', 'asc')->get(['name', 'id', 'region_id'])->toJson() !!};
+            } else {
+                table = {!! xotModel('club')->where('territorial_only', '!=', '1')->orderBy('name', 'asc')->get(['name', 'id', 'region_id'])->toJson() !!};
+            }
+
+            return table;
+
+        }
+
+        function rewriteClub() {
+
+            let bool_centro_regolatore = false;
+
+            let region = $("#mainForm [name='region_id']:visible option:selected").text();
+            if (region === '') {
+                @isset(Auth::user()->profile->region->name)
+                    region = '{{ Auth::user()->profile->region->name }}';
+                @endisset
+            }
+            let province = $("#mainForm [name='province_id']:visible option:selected").text();
+            if (province === '') {
+                @isset(Auth::user()->profile->province->name)
+                    province = '{{ Auth::user()->profile->province->name }}';
+                @endisset
+            }
+
+            if (region !== "" && region.toUpperCase() !== "REGIONE") {
+                bool_centro_regolatore = true;
+            }
+
+            if (province !== "" && province.toUpperCase() !== "PROVINCIA") {
+                bool_centro_regolatore = true;
+            }
+
+
+            let newOptions = clubInput(bool_centro_regolatore);
+
+            let newOptionElements = "";
+
+            newOptionElements += "<option value>Categoria</option>"
+
+            newOptions.forEach((v) => {
+                newOptionElements += "<option value='" + v["id"] + "'>" + v["name"] +
+                    "</option>"
+            });
+
+            $('select#club_id').html(newOptionElements);
+        }
+
+        function rewriteDescription() {
+            let upload_data = $("#mainForm [name='upload_date']").val();
+            let region = $("#mainForm [name='region_id']:visible option:selected").text();
+            if (region === '') {
+                @isset(Auth::user()->profile->region->name)
+                    region = '{{ Auth::user()->profile->region->name }}';
+                @endisset
+            }
+            let province = $("#mainForm [name='province_id']:visible option:selected").text();
+            if (province === '') {
+                @isset(Auth::user()->profile->province->name)
+                    province = '{{ Auth::user()->profile->province->name }}';
+                @endisset
+            }
+            let club = $("#mainForm [name='club_id'] option:selected").text();
+            if (club === '') {
+                @isset(Auth::user()->profile->club->name)
+                    club = '{{ Auth::user()->profile->club->name }}';
+                @endisset
+            }
+
+            let temp_description = '';
+
+            if (upload_data) {
+                temp_description += upload_data;
+            }
+
+            if (region !== "" && region.toUpperCase() !== "REGIONE") {
+                temp_description += "_" + region;
+            }
+
+            if (province !== "" && province.toUpperCase() !== "PROVINCIA") {
+                temp_description += "_" + province;
+            }
+
+            if (club.toUpperCase() !== "CATEGORIA") {
+                temp_description += "_" + club;
+            }
+
+
+            let description = convertToSlug(temp_description);
+
+            $("#mainForm [name='description']").val(description.toUpperCase());
+
+            $("#mainForm [name='description']").trigger('change');
+        }
+
         function convertToSlug(Text) {
             return Text
                 .toLowerCase()
@@ -249,56 +359,10 @@ session()->put('timestamp_caricamento_schede', microtime(true));
 
         document.addEventListener("DOMContentLoaded", function() {
 
-            function rewrite_description() {
-                let upload_data = $("#mainForm [name='upload_date']").val();
-                let region = $("#mainForm [name='region_id']:visible option:selected").text();
-                if (region === '') {
-                    @isset(Auth::user()->profile->region->name)
-                        region = '{{ Auth::user()->profile->region->name }}';
-                    @endisset
-                }
-                let province = $("#mainForm [name='province_id']:visible option:selected").text();
-                if (province === '') {
-                    @isset(Auth::user()->profile->province->name)
-                        province = '{{ Auth::user()->profile->province->name }}';
-                    @endisset
-                }
-                let club = $("#mainForm [name='club_id'] option:selected").text();
-                if (club === '') {
-                    @isset(Auth::user()->profile->club->name)
-                        club = '{{ Auth::user()->profile->club->name }}';
-                    @endisset
-                }
-
-                let temp_description = '';
-
-                if (upload_data) {
-                    temp_description += upload_data;
-                }
-
-                if (region !== "" && region.toUpperCase() !== "REGIONE") {
-                    temp_description += "_" + region;
-                }
-
-                if (province !== "" && province.toUpperCase() !== "PROVINCIA") {
-                    temp_description += "_" + province;
-                }
-
-                if (club.toUpperCase() !== "CATEGORIA") {
-                    temp_description += "_" + club;
-                }
-
-
-                let description = convertToSlug(temp_description);
-
-                $("#mainForm [name='description']").val(description.toUpperCase());
-
-                $("#mainForm [name='description']").trigger('change');
-            }
-
             $("#mainForm [name='upload_date'],#mainForm [name='region_id'],#mainForm [name='province_id'],#mainForm [name='club_id']")
                 .change(() => {
-                    rewrite_description();
+                    rewriteClub();
+                    rewriteDescription();
                 });
 
             $('#region_id select').change(() => {
@@ -332,9 +396,11 @@ session()->put('timestamp_caricamento_schede', microtime(true));
                 } else if (territory_level === '3') {
                     $('.territory_1').removeClass('d-none');
                     $('.territory_2').removeClass('d-none');
+                } else {
+                    $('#region_id select').html();
                 }
 
-                rewrite_description();
+                rewriteDescription();
 
             });
 
