@@ -166,12 +166,13 @@ xotModel('club')
 
             {!! Form::close() !!}
         </div>
+
+
+
+        @include('pub_theme::home.store.acts.archivio_schede')
+
     </div>
     <!--</div>-->
-
-
-    @include('pub_theme::home.store.acts.archivio_schede')
-
 
     <script>
         //sostituire con livewire
@@ -192,6 +193,7 @@ xotModel('club')
 
         }
 
+
         function clubInput(bool_centro_regolatore) {
 
             let table = [];
@@ -206,7 +208,7 @@ xotModel('club')
 
         }
 
-        function rewriteClub() {
+        function rewriteClub(current_club_id) {
 
             let bool_centro_regolatore = false;
 
@@ -244,49 +246,71 @@ xotModel('club')
             });
 
             $('select#club_id').html(newOptionElements);
+
+            $('select#club_id option[value="' + current_club_id + '"]').prop('selected', true);
         }
+
+
 
         document.addEventListener("DOMContentLoaded", function() {
 
-            function province_per_regione() {
-                let region_id = $('[name="region_id"]').val();
 
-                if (region_id !== '') {
-
-                    let newOptions = provinceInput(region_id);
-
-                    let newOptionElements = "";
-
-                    newOptionElements += "<option value>Provincia</option>"
-
-                    newOptions.forEach((v) => {
-                        newOptionElements += "<option value='" + v["id"] + "'>" + v["name"] +
-                            "</option>"
-                    });
-
-                    $('#province_id select').html(newOptionElements);
-                }
-            }
 
             $("#mainForm [name='region_id'],#mainForm [name='province_id']")
                 .change(() => {
-                    rewriteClub();
+                    rewriteClub($('[name="club_id"]').val());
                 });
 
 
             $('#region_id select').change(() => {
 
-                province_per_regione();
+                let region_id = $('#region_id select').val();
+
+                let newOptions = provinceInput(region_id);
+
+                let newOptionElements = "";
+
+                newOptionElements += "<option value>Provincia</option>"
+
+                newOptions.forEach((v) => {
+                    newOptionElements += "<option value='" + v["id"] + "'>" + v["name"] +
+                        "</option>"
+                });
+
+                $('#province_id select').html(newOptionElements);
 
             });
 
-            province_per_regione();
+            let region_id = $('[name="region_id"]').val();
 
-            @isset($row->province_id)
-            
-                $('#province_id select option[value="{{ $row->province_id }}"]').prop('selected',true);
-            
-            @endisset
+            if (region_id) {
+
+                let newOptions = provinceInput(region_id);
+
+                let newOptionElements = "";
+
+                newOptionElements += "<option value>Provincia</option>"
+
+                newOptions.forEach((v) => {
+                    newOptionElements += "<option value='" + v["id"] + "'>" + v["name"] +
+                        "</option>"
+                });
+
+                $('#province_id select').html(newOptionElements);
+
+                @isset($row->province_id)
+                    $('#province_id select option[value="{{ $row->province_id }}"]').prop('selected',true);
+                @endisset
+
+            }
+
+
+
+            @if (isset($row->club_id))
+                rewriteClub("{{ $row->club_id }}");
+            @else
+                rewriteClub();
+            @endif
 
         });
 

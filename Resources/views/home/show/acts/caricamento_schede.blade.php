@@ -2,6 +2,17 @@
 session()->put('timestamp_caricamento_schede', microtime(true));
 //session()->getId()
 //session('timestamp_caricamento_schede'));
+
+$territorial_level_options = [];
+
+if (Auth::user()->profile->getAttribute('province_id')) {
+    $territorial_level_options = [3 => 'Territoriale'];
+} elseif (Auth::user()->profile->getAttribute('region_id')) {
+    $territorial_level_options = [2 => 'Regionale', 3 => 'Territoriale'];
+} else {
+    $territorial_level_options = [1 => 'Nazionale', 2 => 'Regionale', 3 => 'Territoriale'];
+}
+
 @endphp
 
 @extends ('pub_theme::layouts.app')
@@ -44,8 +55,8 @@ session()->put('timestamp_caricamento_schede', microtime(true));
     [
         'style' => 'width:100%',
         'label' => ' ',
-        'placeholder' => 'Livello Territoriale',
-        'options' => [1 => 'Nazionale', 2 => 'Regionale', 3 => 'Provinciale'],
+        'placeholder' => null,
+        'options' => $territorial_level_options,
     ],
 ) }}
             </div>
@@ -159,7 +170,15 @@ session()->put('timestamp_caricamento_schede', microtime(true));
                 </div>
             @endif
 
-            <div class="col-md-12 mt-3">
+            <div id="upload_progress" class="col-md-12 mt-3 mb-3 d-none">
+                <h2 class="text-center">Caricamento in corso...</h2>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0"
+                        aria-valuemax="100">0%</div>
+                </div>
+            </div>
+
+            <div id="upload_tab" class="col-md-12 mt-3">
                 <table class="table table-hover table-striped">
 
                     <tr>
@@ -222,7 +241,7 @@ session()->put('timestamp_caricamento_schede', microtime(true));
 
     //dddx(Auth::user()->profile->region->name);
     /*dddx(
-                                                                                                                                                                                                           );*/
+                                                                                                                                                                                                                                                                                       );*/
     @endphp
 
     <script>
