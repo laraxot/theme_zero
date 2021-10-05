@@ -222,12 +222,7 @@ session()->put('timestamp_caricamento_schede', microtime(true));
 
     //dddx(Auth::user()->profile->region->name);
     /*dddx(
-                                                                                                                                                    xotModel('club')
-                                                                                                                                                        ->orderBy('name', 'asc')
-                                                                                                                                                        ->get(['name', 'id'])
-                                                                                                                                                        ->pluck('name', 'id')
-                                                                                                                                                        ->toArray()->
-                                                                                                                                                );*/
+                                                                                                                                                                                                           );*/
     @endphp
 
     <script>
@@ -263,7 +258,7 @@ session()->put('timestamp_caricamento_schede', microtime(true));
 
         }
 
-        function rewriteClub() {
+        function rewriteClub(current_club_id) {
 
             let bool_centro_regolatore = false;
 
@@ -301,10 +296,16 @@ session()->put('timestamp_caricamento_schede', microtime(true));
             });
 
             $('select#club_id').html(newOptionElements);
+
+            $('select#club_id option[value="' + current_club_id + '"]').prop('selected', true);
         }
 
         function rewriteDescription() {
             let upload_data = $("#mainForm [name='upload_date']").val();
+
+            let territorial_level = $("#mainForm [name='territorial_level']:visible option:selected").text();
+
+
             let region = $("#mainForm [name='region_id']:visible option:selected").text();
             if (region === '') {
                 @isset(Auth::user()->profile->region->name)
@@ -328,6 +329,10 @@ session()->put('timestamp_caricamento_schede', microtime(true));
 
             if (upload_data) {
                 temp_description += upload_data;
+            }
+
+            if (territorial_level.toUpperCase() === "NAZIONALE") {
+                temp_description += "_NAZIONALE";
             }
 
             if (region !== "" && region.toUpperCase() !== "REGIONE") {
@@ -359,11 +364,6 @@ session()->put('timestamp_caricamento_schede', microtime(true));
 
         document.addEventListener("DOMContentLoaded", function() {
 
-            $("#mainForm [name='upload_date'],#mainForm [name='region_id'],#mainForm [name='province_id'],#mainForm [name='club_id']")
-                .change(() => {
-                    rewriteClub();
-                    rewriteDescription();
-                });
 
             $('#region_id select').change(() => {
 
@@ -397,12 +397,22 @@ session()->put('timestamp_caricamento_schede', microtime(true));
                     $('.territory_1').removeClass('d-none');
                     $('.territory_2').removeClass('d-none');
                 } else {
-                    $('#region_id select').html();
+                    //$('#region_id select').html();
                 }
 
                 rewriteDescription();
 
             });
+
+            $("#mainForm [name='upload_date'],#mainForm [name='region_id'],#mainForm [name='province_id'],#mainForm [name='club_id'],#mainForm [name='territorial_level']")
+                .change(() => {
+                    rewriteDescription();
+                });
+
+            $("#mainForm [name='region_id'],#mainForm [name='province_id'],#mainForm [name='territorial_level']")
+                .change(() => {
+                    rewriteClub($('[name="club_id"]').val());
+                });
 
         });
 
