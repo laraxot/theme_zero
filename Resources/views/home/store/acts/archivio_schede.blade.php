@@ -37,7 +37,16 @@
                         <td>{{ $row->description }}</td>
 
                         <td>
-                            <a href="{!! $_panel->urlItemAction('scarica_file', ['query_params' => ['upload_id' => $row->upload_id]]) !!}" type="button" class="btn btn-danger">Scarica</a>
+                            @php
+                                //dddx($row->add_missing_files);
+                            @endphp
+
+                            <a href="{!! $_panel->urlItemAction('scarica_file', ['query_params' => ['upload_id' => $row->upload_id, 'report_type_id' => $report_type_id]]) !!}" type="button" class="btn btn-danger">Scarica</a>
+
+                            @if ($row->add_missing_files === true)
+                                <a href="{!! $_panel->urlItemAction('caricamento_schede', ['query_params' => ['upload_id' => $row->upload_id]]) !!}" type="button" class="btn btn-info">Modifica</a>
+                            @endif
+
                         </td>
                     </tr>
 

@@ -1,16 +1,36 @@
 @php
+
 session()->put('timestamp_caricamento_schede', microtime(true));
 //session()->getId()
 //session('timestamp_caricamento_schede'));
 
+if (!empty(request()->input('upload_id'))) {
+    //$current_upload_data
+}
+
 $territorial_level_options = [];
 
 if (Auth::user()->profile->getAttribute('province_id')) {
-    $territorial_level_options = [3 => 'Territoriale'];
+    //$territorial_level_options = [3 => 'Territoriale'];
+    $territorial_level_options = xotModel('territorial_level')
+        ->where('id', '>=', '3')
+        ->get()
+        ->pluck('name', 'id')
+        ->toArray();
 } elseif (Auth::user()->profile->getAttribute('region_id')) {
-    $territorial_level_options = [2 => 'Regionale', 3 => 'Territoriale'];
+    //$territorial_level_options = [2 => 'Regionale', 3 => 'Territoriale'];
+    $territorial_level_options = xotModel('territorial_level')
+        ->where('id', '>=', '2')
+        ->get()
+        ->pluck('name', 'id')
+        ->toArray();
 } else {
-    $territorial_level_options = [1 => 'Nazionale', 2 => 'Regionale', 3 => 'Territoriale'];
+    //$territorial_level_options = [1 => 'Nazionale', 2 => 'Regionale', 3 => 'Territoriale'];
+    $territorial_level_options = xotModel('territorial_level')
+        ->where('id', '>=', '1')
+        ->get()
+        ->pluck('name', 'id')
+        ->toArray();
 }
 
 @endphp
@@ -22,48 +42,36 @@ if (Auth::user()->profile->getAttribute('province_id')) {
 
     <div class="container-large">
 
-        <!--<div class="row clearfix">-->
+        {!! Form::model(null, ['url' => Request::fullUrl(), 'id' => 'mainForm' /*, 'class' => 'form-inline'*/]) !!}
+        @method('post')
 
-        <div class="col-md-12 p-0 pt-3">
-
-            @php
-                //dddx(get_defined_vars());
-            @endphp
-
-            {!! Form::model(null, ['url' => Request::fullUrl(), 'id' => 'mainForm', 'class' => 'form-inline']) !!}
-            @method('post')
-
-
-
-
-
-
-            <div class="col-md-3">
-                {{ Form::bsDate('upload_date', \Carbon\Carbon::now(), ['label' => 'Data di Inserimento', 'style' => 'width:100%', 'class' => 'control-label']) }}
+        <div class="row">
+            <div class="col-md-4">
+                {{ Form::bsDate('upload_date', \Carbon\Carbon::now(), ['label' => 'Data di Inserimento *', 'style' => 'width:100%', 'class' => 'control-label']) }}
             </div>
 
-            <div class="col-md-6">
-                {{ Form::bsText('description', '', ['style' => 'width:100%', 'placeholder' => 'Descrizione', 'label' => 'Descrizione']) }}
+            <div class="col-md-4">
+                {{ Form::bsText('description', '', ['style' => 'width:100%', 'placeholder' => 'Descrizione', 'label' => 'Descrizione *']) }}
             </div>
 
-            <div class="col-md-3"> &nbsp;</div>
-
-            <div class="col-md-3">
+            <div class="col-md-4">
                 {{ Form::bsSelect(
     'territorial_level',
     [],
     [
         'style' => 'width:100%',
-        'label' => ' ',
-        'placeholder' => null,
+        'label' => 'Seleziona Territorio *',
+        'placeholder' => 'Seleziona Territorio',
         'options' => $territorial_level_options,
     ],
 ) }}
             </div>
+        </div>
 
+        <div class="row">
             @if (Auth::user()->profile->getAttribute('region_id'))
 
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="form-group col-sm-12">
 
                         {{ Form::label('region_id', 'Regione: ' . Auth::user()->profile->region->name, ['name' => 'region_id', 'value' => Auth::user()->profile->region->id, 'class' => 'control-label']) }}
@@ -74,13 +82,13 @@ if (Auth::user()->profile->getAttribute('province_id')) {
                 </div>
 
             @else
-                <div class="col-md-3 territory_1 d-none" id="region_id">
+                <div class="col-md-4 territory_1 d-none" id="region_id">
                     {{ Form::bsSelect(
     'region_id',
     [],
     [
         'style' => 'width:100%',
-        'label' => ' ',
+        'label' => 'Regione',
         'placeholder' => 'Regione',
         'options' => xotModel('region')
             ::orderBy('name', 'asc')->get(['name', 'id'])->pluck('name', 'id')->toArray(),
@@ -94,7 +102,7 @@ if (Auth::user()->profile->getAttribute('province_id')) {
 
 
             @if (Auth::user()->profile->getAttribute('province_id'))
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="form-group col-sm-12">
 
                         {{ Form::label('province_id', 'Provincia: ' . Auth::user()->profile->province->name, ['name' => 'province_id', 'value' => Auth::user()->profile->province->id, 'class' => 'control-label']) }}
@@ -104,7 +112,7 @@ if (Auth::user()->profile->getAttribute('province_id')) {
                 </div>
             @else
 
-                <div class="col-md-3 territory_2 d-none" id="province_id">
+                <div class="col-md-4 territory_2 d-none" id="province_id">
 
 
 
@@ -117,10 +125,9 @@ if (Auth::user()->profile->getAttribute('province_id')) {
     [],
     [
         'style' => 'width:100%',
-        'label' => ' ',
+        'label' => 'Provincia',
         'placeholder' => 'Provincia',
-        'options' => xotModel('province')
-            ::where('region_id', Auth::user()->profile->region->id)->orderBy('name', 'asc')->get(['name', 'id'])->pluck('name', 'id')->toArray(),
+        'options' => xotModel('province')->where('region_id', Auth::user()->profile->region->id)->orderBy('name', 'asc')->get(['name', 'id'])->pluck('name', 'id')->toArray(),
     ],
 ) }}
                     @else
@@ -131,7 +138,7 @@ if (Auth::user()->profile->getAttribute('province_id')) {
     [],
     [
         'style' => 'width:100%',
-        'label' => ' ',
+        'label' => 'Provincia',
         'placeholder' => 'Provincia',
         'options' => [] /*xotModel('province')->get(['name', 'id'])->pluck('name', 'id')->toArray()*/,
     ],
@@ -143,7 +150,7 @@ if (Auth::user()->profile->getAttribute('province_id')) {
 
 
             @if (Auth::user()->profile->getAttribute('club_id'))
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="form-group col-sm-12">
 
                         {{ Form::label('club_id', 'Categoria: ' . Auth::user()->profile->club->name, ['name' => 'club_id', 'value' => Auth::user()->profile->club->id, 'class' => 'control-label']) }}
@@ -153,86 +160,88 @@ if (Auth::user()->profile->getAttribute('province_id')) {
                     </div>
                 </div>
             @else
-                <div class="col-md-3">
+                <div class="col-md-4">
                     {{ Form::bsSelect(
     'club_id',
     [],
     [
         'style' => 'width:100%',
-        'label' => ' ',
+        'label' => 'Categoria',
         'placeholder' => 'Categoria',
-        'options' => xotModel('club')
-            ::where('territorial_only', '!=', '1')->orderBy('name', 'asc')->get(['name', 'id'])->pluck('name', 'id')->toArray(),
+        'options' => xotModel('club')->where('territorial_only', '!=', '1')->orderBy('name', 'asc')->get(['name', 'id'])->pluck('name', 'id')->toArray(),
     ],
 ) }}
 
 
                 </div>
             @endif
+        </div>
 
-            <div id="upload_progress" class="col-md-12 mt-3 mb-3 d-none">
-                <h2 class="text-center">Caricamento in corso...</h2>
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0"
-                        aria-valuemax="100">0%</div>
-                </div>
+        <div id="upload_progress" class="col-md-12 mt-3 mb-3 d-none">
+            <h2 class="text-center">Caricamento in corso...</h2>
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0"
+                    aria-valuemax="100">0%</div>
             </div>
+        </div>
 
-            <div id="upload_tab" class="col-md-12 mt-3">
-                <table class="table table-hover table-striped">
+        <div id="upload_tab" class="col-md-12 mt-3">
+            <table class="table table-hover table-striped">
 
-                    <tr>
-                        <th>Tipo</th>
+                <tr>
+                    <th class="col-md-9">Tipo</th>
+                    <th class="col-md-1">File</th>
+                    <th class="col-md-2">Flag</th>
+                </tr>
 
-                        <th>File</th>
-                        <th>Flag</th>
-                    </tr>
+                @php
+                    //dddx($rows);
+                @endphp
 
-                    @php
-                        //dddx($rows);
-                    @endphp
+                @foreach ($rows as $row)
 
-                    @foreach ($rows as $row)
-
-                        @can('viewRow', Panel::get($row))
-
-
+                    @can('viewRow', Panel::get($row))
 
 
 
-                            {{-- $table->integer('report_type_id');
+
+
+                        {{-- $table->integer('report_type_id');
                     $table->text('path');
                     $table->text('title');
                     $table->text('description') --}}
 
-                            <tr>
-                                <td>{{ Form::hidden('report_type_id[]', $row->id) }}
-                                    <div class="text-left">{{ $row->title }}</div>
-                                </td>
+                        <tr>
+                            <td>{{ Form::hidden('report_type_id[]', $row->id) }}
+                                <div class="text-left"><strong>{{ Str::upper($row->title) }}</strong></div>
+                                <div>
+                                    {{ Form::label('filelist_' . $row->id, 'File non selezionato', ['name' => 'filelist_' . $row->id, 'id' => 'filelist_' . $row->id, 'value' => '', 'class' => 'control-label font-italic', 'style' => 'display:block']) }}
+                                </div>
+                            </td>
 
-                                <td> {{ Form::bsPlupload($row->id, [], ['class' => 'btn btn-danger']) }}{{-- Form::bsPdf($row->id) --}}
-                                </td>
-                                <td>{{ $row->id != 14 ? Form::bsCheckbox('purposal_flag[]', '', ['label' => 'Nessuna Proposta&nbsp;']) : '' }}
-                                </td>
-                            </tr>
+                            <td> {{ Form::bsPlupload($row->id, [], ['class' => 'btn btn-danger']) }}{{-- Form::bsPdf($row->id) --}}
+                            </td>
+                            <td>{{ $row->id != 14 ? Form::bsCheckbox('purposal_flag[]', '', ['label' => 'Nessuna Proposta&nbsp;']) : '' }}
+                            </td>
+                        </tr>
 
 
 
 
-                        @endcan
-                    @endforeach
+                    @endcan
+                @endforeach
 
-                </table>
-            </div>
-
-            <div class="col-md-12 text-right">
-
-                {{ Form::bsSubmitRightBigShowHide('Invia') }}
-            </div>
-
-            {!! Form::close() !!}
-
+            </table>
         </div>
+
+        <div class="col-md-12 text-right">
+
+            {{ Form::bsSubmitRightBigShowHide('Invia') }}
+        </div>
+
+        {!! Form::close() !!}
+
+
     </div>
     <!--</div>-->
 
@@ -241,7 +250,7 @@ if (Auth::user()->profile->getAttribute('province_id')) {
 
     //dddx(Auth::user()->profile->region->name);
     /*dddx(
-                                                                                                                                                                                                                                                                                       );*/
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       );*/
     @endphp
 
     <script>
@@ -432,6 +441,8 @@ if (Auth::user()->profile->getAttribute('province_id')) {
                 .change(() => {
                     rewriteClub($('[name="club_id"]').val());
                 });
+
+            rewriteDescription();
 
         });
 
