@@ -57,7 +57,7 @@
 
                             <div class="form-group">
                                 <div class="input-group" id="show_hide_password_0">
-                                    <input class="form-control" type="password" name="password" required minlength="8">
+                                    <input class="form-control" type="password" name="password" required>
                                     <div class="btn btn-secondary input-group-addon">
                                         <i class="fa fa-eye-slash" aria-hidden="true"></i>
                                     </div>
