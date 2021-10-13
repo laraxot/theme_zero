@@ -47,6 +47,11 @@ if (Auth::user()->profile->getAttribute('province_id')) {
 
     <div class="container-large">
 
+        {{-- @if (!empty(request()->input('upload_id'))) --}}
+
+
+        {{-- @endif --}}
+
         {!! Form::model(null, ['url' => Request::fullUrl(), 'id' => 'mainForm' /*, 'class' => 'form-inline'*/]) !!}
         @method('post')
 
@@ -205,6 +210,12 @@ if (Auth::user()->profile->getAttribute('province_id')) {
         </div>
 
         <div id="upload_tab" class="col-md-12 mt-3">
+
+            @if (!empty(request()->input('upload_id')))
+                <a onclick="window.history.back()" href="#" class="btn btn-secondary mb-3"><i class="fa fa-caret-left"></i>
+                    INDIETRO</a>
+            @endif
+
             <table class="table table-hover table-striped">
 
                 <tr>
@@ -234,7 +245,16 @@ if (Auth::user()->profile->getAttribute('province_id')) {
                             <td>{{ Form::hidden('report_type_id[]', $row->id) }}
                                 <div class="text-left"><strong>{{ Str::upper($row->title) }}</strong></div>
                                 <div>
-                                    {{ Form::label('filelist_' . $row->id, 'File non selezionato', ['name' => 'filelist_' . $row->id, 'id' => 'filelist_' . $row->id, 'value' => '', 'class' => 'control-label font-italic', 'style' => 'display:block']) }}
+                                    @if ($uploaded_reports->where('report_type_id', $row->id)->count() > 0)
+                                        @php
+                                            //dddx($uploaded_reports);
+                                            //dddx($uploaded_reports->where('report_type_id', $row->id)->first()->short . '/' . basename($uploaded_reports->where('report_type_id', $row->id)->first()->path));
+                                            $file_path = basename($uploaded_reports->where('report_type_id', $row->id)->first()->path);
+                                        @endphp
+                                        {{ Form::label('filelist_' . $row->id, $file_path, ['name' => 'filelist_' . $row->id, 'id' => 'filelist_' . $row->id, 'value' => '', 'class' => 'control-label font-italic', 'style' => 'display:block']) }}
+                                    @else
+                                        {{ Form::label('filelist_' . $row->id, 'File non selezionato', ['name' => 'filelist_' . $row->id, 'id' => 'filelist_' . $row->id, 'value' => '', 'class' => 'control-label font-italic', 'style' => 'display:block']) }}
+                                    @endif
                                 </div>
                             </td>
 
@@ -259,7 +279,7 @@ if (Auth::user()->profile->getAttribute('province_id')) {
                                     @endif
 
                                 @else
-                                    {{ $row->id != 14 ? Form::bsCheckbox('purposal_flag[]', '', ['label' => 'Nessuna Proposta&nbsp;']) : '' }}
+                                    {{ $row->id != 14 ? Form::bsCheckbox('purposal_flag[]', '', ['id' => 'purposal_flag_' . $row->id, 'disabled', 'label' => 'Nessuna Proposta&nbsp;']) : '' }}
                                 @endif
                             </td>
                         </tr>
@@ -281,6 +301,7 @@ if (Auth::user()->profile->getAttribute('province_id')) {
         {!! Form::close() !!}
 
 
+
     </div>
     <!--</div>-->
 
@@ -289,7 +310,7 @@ if (Auth::user()->profile->getAttribute('province_id')) {
 
     //dddx(Auth::user()->profile->region->name);
     /*dddx(
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               );*/
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   );*/
     @endphp
 
     <script>
@@ -460,11 +481,13 @@ if (Auth::user()->profile->getAttribute('province_id')) {
 
                 if (territory_level === '2') {
                     $('.territory_1').removeClass('d-none');
+                    $('select#province_id').val("");
                 } else if (territory_level === '3') {
                     $('.territory_1').removeClass('d-none');
                     $('.territory_2').removeClass('d-none');
                 } else {
-                    //$('#region_id select').html();
+                    $('select#region_id').val("");
+                    $('select#province_id').val("");
                 }
 
                 rewriteDescription();

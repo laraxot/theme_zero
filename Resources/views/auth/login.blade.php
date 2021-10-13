@@ -39,7 +39,7 @@
                         <label class="col-md-4 control-label"><strong>Indirizzo E-Mail</strong></label>
 
                         <div class="col-md-12">
-                            <input type="email" class="form-control" name="email" value="{{ old('email') }}">
+                            <input type="email" class="form-control" name="email" value="{{ old('email') }}" required>
 
                             @if ($errors->has('email'))
                                 <span class="form-text text-muted">
@@ -53,7 +53,16 @@
                         <label class="col-md-4 control-label"><strong>Password</strong></label>
 
                         <div class="col-md-12">
-                            <input type="password" class="form-control" name="password">
+                            <!--<input type="password" class="form-control" name="password" required>-->
+
+                            <div class="form-group">
+                                <div class="input-group" id="show_hide_password_0">
+                                    <input class="form-control" type="password" name="password" required minlength="8">
+                                    <div class="btn btn-secondary input-group-addon">
+                                        <i class="fa fa-eye-slash" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
 
                             @if ($errors->has('password'))
                                 <span class="form-text text-muted">
@@ -93,12 +102,27 @@
             style="position:fixed;left:0;width:100vw;background: rgba(0,0,0,0.5);padding-left: 2vw;padding-right: 2vw;">
             <span style="color:white;font-size:3vh;font-weight:bold;text-shadow:2px 2px rgb(39, 39, 39);">Piattaforma
                 Verbali
-                <br>Conferenza di Organizzazione 2021</span>
+                <br>Assemblea di Organizzazione 2021</span>
         </div>
 
     </div>
 
 
-
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            $("#show_hide_password_0 .input-group-addon").on('click', function(event) {
+                event.preventDefault();
+                if ($('#show_hide_password_0 input').attr("type") == "text") {
+                    $('#show_hide_password_0 input').attr('type', 'password');
+                    $('#show_hide_password_0 i').addClass("fa-eye-slash");
+                    $('#show_hide_password_0 i').removeClass("fa-eye");
+                } else if ($('#show_hide_password_0 input').attr("type") == "password") {
+                    $('#show_hide_password_0 input').attr('type', 'text');
+                    $('#show_hide_password_0 i').removeClass("fa-eye-slash");
+                    $('#show_hide_password_0 i').addClass("fa-eye");
+                }
+            });
+        });
+    </script>
 
 @endsection

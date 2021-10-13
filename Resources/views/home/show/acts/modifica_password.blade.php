@@ -43,7 +43,15 @@
                 <label class="col-md-4 control-label"><strong>Vecchia Password</strong></label>
 
                 <div class="col-md-12">
-                    <input type="password" class="form-control" name="old_password" required minlength="8">
+                    <!--<input type="password" class="form-control" name="old_password" required minlength="8">-->
+                    <div class="form-group">
+                        <div class="input-group" id="show_hide_password_0">
+                            <input class="form-control" type="password" name="old_password" required minlength="8">
+                            <div class="btn btn-secondary input-group-addon">
+                                <i class="fa fa-eye-slash" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
 
                     @if ($errors->has('old_password'))
                         <span class="form-text text-muted">
@@ -57,7 +65,16 @@
                 <label class="col-md-4 control-label"><strong>Password (minimo 8 caratteri)</strong></label>
 
                 <div class="col-md-12">
-                    <input type="password" class="form-control" name="password" required minlength="8">
+                    <!--<input type="password" class="form-control" name="password" required minlength="8">-->
+
+                    <div class="form-group">
+                        <div class="input-group" id="show_hide_password_1">
+                            <input class="form-control" type="password" name="password" required minlength="8">
+                            <div class="btn btn-secondary input-group-addon">
+                                <i class="fa fa-eye-slash" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
 
                     @if ($errors->has('password'))
                         <span class="form-text text-muted">
@@ -71,7 +88,16 @@
                 <label class="col-md-4 control-label"><strong>Conferma Password</strong></label>
 
                 <div class="col-md-12">
-                    <input type="password" class="form-control" name="confirm_password" required minlength="8">
+                    <!--<input type="password" class="form-control" name="confirm_password" required minlength="8">-->
+
+                    <div class="form-group">
+                        <div class="input-group" id="show_hide_password_2">
+                            <input class="form-control" type="password" name="confirm_password" required minlength="8">
+                            <div class="btn btn-secondary input-group-addon">
+                                <i class="fa fa-eye-slash" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
 
                     @if ($errors->has('confirm_password'))
                         <span class="form-text text-muted">
@@ -210,6 +236,46 @@
         function bit_rol(d, _) {
             return d << _ | d >>> 32 - _
         }
+
+
+        document.addEventListener("DOMContentLoaded", function() {
+            $("#show_hide_password_0 .input-group-addon").on('click', function(event) {
+                event.preventDefault();
+                if ($('#show_hide_password_0 input').attr("type") == "text") {
+                    $('#show_hide_password_0 input').attr('type', 'password');
+                    $('#show_hide_password_0 i').addClass("fa-eye-slash");
+                    $('#show_hide_password_0 i').removeClass("fa-eye");
+                } else if ($('#show_hide_password_0 input').attr("type") == "password") {
+                    $('#show_hide_password_0 input').attr('type', 'text');
+                    $('#show_hide_password_0 i').removeClass("fa-eye-slash");
+                    $('#show_hide_password_0 i').addClass("fa-eye");
+                }
+            });
+            $("#show_hide_password_1 .input-group-addon").on('click', function(event) {
+                event.preventDefault();
+                if ($('#show_hide_password_1 input').attr("type") == "text") {
+                    $('#show_hide_password_1 input').attr('type', 'password');
+                    $('#show_hide_password_1 i').addClass("fa-eye-slash");
+                    $('#show_hide_password_1 i').removeClass("fa-eye");
+                } else if ($('#show_hide_password_1 input').attr("type") == "password") {
+                    $('#show_hide_password_1 input').attr('type', 'text');
+                    $('#show_hide_password_1 i').removeClass("fa-eye-slash");
+                    $('#show_hide_password_1 i').addClass("fa-eye");
+                }
+            });
+            $("#show_hide_password_2 .input-group-addon").on('click', function(event) {
+                event.preventDefault();
+                if ($('#show_hide_password_2 input').attr("type") == "text") {
+                    $('#show_hide_password_2 input').attr('type', 'password');
+                    $('#show_hide_password_2 i').addClass("fa-eye-slash");
+                    $('#show_hide_password_2 i').removeClass("fa-eye");
+                } else if ($('#show_hide_password_2 input').attr("type") == "password") {
+                    $('#show_hide_password_2 input').attr('type', 'text');
+                    $('#show_hide_password_2 i').removeClass("fa-eye-slash");
+                    $('#show_hide_password_2 i').addClass("fa-eye");
+                }
+            });
+        });
     </script>
 
 @endsection

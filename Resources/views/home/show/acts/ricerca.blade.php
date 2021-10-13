@@ -72,7 +72,7 @@ if (Auth::user()->profile->getAttribute('province_id')) {
                 {{ Form::bsText('description', $row->description, ['style' => 'width:100%', 'placeholder' => 'Descrizione', 'label' => 'Descrizione']) }}
             </div>
 
-            <div class="col-md-4">
+            <div dusk="select-territorio" class="col-md-4">
                 {{ Form::bsSelect(
     'territorial_level',
     [],
@@ -91,7 +91,7 @@ if (Auth::user()->profile->getAttribute('province_id')) {
         <div class="row">
             @if (Auth::user()->profile->getAttribute('region_id'))
 
-                <div class="col-md-4">
+                <div class="col-md-4" dusk="select-regione">
                     <div class="form-group col-sm-12">
                         {{ Form::label('region_id', 'Regione: ' . Auth::user()->profile->region->name, ['class' => 'control-label']) }}
 
@@ -102,12 +102,13 @@ if (Auth::user()->profile->getAttribute('province_id')) {
                 </div>
 
             @else
-                <div class="col-md-4 territory_1 d-none" id="region_id">
+                <div dusk="select-regione" class=" col-md-4 territory_1 d-none" id="region_id">
                     {{ Form::bsSelect(
     'region_id',
     [],
     [
         /*per mettere il valore inviato dal form precedente */
+
         'value' => $row->region_id,
         'style' => 'width:100%',
         'label' => 'Regione',
@@ -120,7 +121,7 @@ if (Auth::user()->profile->getAttribute('province_id')) {
             @endif
 
             @if (Auth::user()->profile->getAttribute('province_id'))
-                <div class="col-md-4">
+                <div class="col-md-4" dusk="select-provincia">
                     <div class="form-group col-sm-12">
                         {{ Form::label('province_id', 'Provincia: ' . Auth::user()->profile->province->name, ['class' => 'control-label']) }}
 
@@ -130,7 +131,7 @@ if (Auth::user()->profile->getAttribute('province_id')) {
                 </div>
             @else
 
-                <div class="col-md-4 territory_2 d-none" id="province_id">
+                <div dusk="select-provincia" class="col-md-4 territory_2 d-none" id="province_id">
 
 
 
@@ -172,7 +173,7 @@ if (Auth::user()->profile->getAttribute('province_id')) {
 
 
             @if (Auth::user()->profile->getAttribute('club_id'))
-                <div class="col-md-4">
+                <div class="col-md-4" dusk="select-categoria">
                     <div class="form-group col-sm-12">
                         {{ Form::label('club_id', 'Categoria: ' . Auth::user()->profile->club->name, ['class' => 'control-label']) }}
 
@@ -182,7 +183,7 @@ if (Auth::user()->profile->getAttribute('province_id')) {
                     </div>
                 </div>
             @else
-                <div class="col-md-4">
+                <div class="col-md-4" dusk="select-categoria">
                     {{ Form::bsSelect(
     'club_id',
     [],
@@ -309,8 +310,6 @@ if (Auth::user()->profile->getAttribute('province_id')) {
 
         document.addEventListener("DOMContentLoaded", function() {
 
-
-
             $("#mainForm [name='region_id'],#mainForm [name='province_id'],#mainForm [name='territorial_level']")
                 .change(() => {
                     rewriteClub($('[name="club_id"]').val());
@@ -368,11 +367,13 @@ if (Auth::user()->profile->getAttribute('province_id')) {
 
                 if (territory_level === '2') {
                     $('.territory_1').removeClass('d-none');
+                    $('select#province_id').val("");
                 } else if (territory_level === '3') {
                     $('.territory_1').removeClass('d-none');
                     $('.territory_2').removeClass('d-none');
                 } else {
-                    //$('#region_id select').html();
+                    $('select#region_id').val("");
+                    $('select#province_id').val("");
                 }
 
             });
