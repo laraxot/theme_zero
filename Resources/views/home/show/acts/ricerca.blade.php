@@ -216,6 +216,8 @@ if (Auth::user()->profile->getAttribute('province_id')) {
             </div>
 
             <div class="col-md-2">
+                {{ Form::label('', 'Ricerca', ['class' => 'control-label']) }}
+
                 {{ Form::bsSubmit('Cerca', [], ['dusk' => 'tasto-cerca', 'class' => 'form-control btn btn-danger', 'label' => 'Ricerca']) }}
             </div>
 
