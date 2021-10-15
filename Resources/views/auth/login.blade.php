@@ -88,7 +88,7 @@
                                 <i class="fa fa-btn fa-sign-in"></i>Accedi
                             </button>
 
-                            <a class="btn text-danger" href="{{ url('/password/reset') }}">Hai
+                            <a class="btn text-danger" href="{{ url('/auth/password/reset') }}">Hai
                                 Dimenticato La
                                 Password?</a>
                         </div>
