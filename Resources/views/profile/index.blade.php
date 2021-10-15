@@ -22,10 +22,6 @@ $rows = \Modules\ClubReport\Models\Profile::all();
 
     <div class="row">
         <div class="col-md-12 mt-3 mb-4 text-center">
-            @php
-                //dddx(1 === \Auth::user()->perm->perm_type);
-            @endphp
-
 
             <h1>Gestione Utenti</h1>
 
@@ -40,6 +36,8 @@ $rows = \Modules\ClubReport\Models\Profile::all();
             @foreach ($rows as $key => $row)
 
                 @if ($loop->first)
+                    {!! $_panel->btnHtml(['title' => 'Crea Nuovo', 'act' => 'create']) !!}
+
                     <table class="table table-hover table-striped">
                         <thead>
                             <tr>
@@ -72,7 +70,7 @@ $rows = \Modules\ClubReport\Models\Profile::all();
                         @php
                             //dddx($row);
                         @endphp
-                        {!! Form::bsBtnCrud(['row' => $row]) !!}
+                        {!! Form::bsBtnCrud(['row' => $row], ['edit' => 'true', 'delete' => 'true']) !!}
                     </td>
                 </tr>
                 @if ($loop->last)
