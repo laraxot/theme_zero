@@ -1,5 +1,5 @@
 <script>
-    var base_url = '{{ asset('') }}';
+    var base_url = '{{ Theme::asset('') }}';
     var lang = '{{ \App::getLocale() }}';
     {{-- var google_maps_api='{{ config('xra.google.maps.api') }}'; --}}
     @if (\Request::has('address'))
