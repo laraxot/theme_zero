@@ -2,7 +2,7 @@
 $name_dot = bracketsToDotted($name);
 @endphp
 <div
-    class="form-group{{ $errors->has($name_dot) ? ' has-error is-invalid' : '' }} col-sm-{{ $field->col_bs_size }}">
+    class="form-group{{ $errors->has($name_dot) ? ' has-error is-invalid' : '' }} col-sm-{{ $field->col_size }}">
     {{ $label }}
     {{ $input }}
     @if ($errors->has($name_dot))
